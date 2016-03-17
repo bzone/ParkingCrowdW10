@@ -1,0 +1,56 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="menu.toggleMenu()">
+                <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">Nowe wyzwanie</div>
+        <div class="right">
+
+        </div>
+    </ons-toolbar>
+    <div class="contenHolder">
+        <div class="bigLogo" style="height:80px;"></div>
+        <center>
+            <p>Wybierz interesującą Cię kategorie wyzwań</p>
+        </center>
+    </div>
+    <div class="clear"></div>
+    <div class="contenHolder whiteFrame">
+        <ul class="list">
+            <li class="list__item" ng-click="getCategory(4,'Impreza')">
+                <ons-row align="center" class="row ons-row-inner row-center">
+                    <div class="arrow"></div>
+                    <ons-col class="col ons-col-inner">Impreza</ons-col>
+                </ons-row>
+            </li>
+            <li class="list__item" ng-click="getCategory(2,'Kultura i historia')">
+                <ons-row align="center" class="row ons-row-inner row-center">
+                    <div class="arrow"></div>
+                    <ons-col class="col ons-col-inner">Kultura i historia</ons-col>
+                </ons-row>
+            </li>
+            <li class="list__item" ng-click="getCategory(3,'Rozrywka')">
+                <ons-row align="center" class="row ons-row-inner row-center">
+                    <div class="arrow"></div>
+                    <ons-col class="col ons-col-inner">Rozrywka</ons-col>
+                </ons-row>
+            </li>
+            <li class="list__item" ng-click="getCategory(5,'Sport')">
+                <ons-row align="center" class="row ons-row-inner row-center">
+                    <div class="arrow"></div>
+                    <ons-col class="col ons-col-inner">Sport</ons-col>
+                </ons-row>
+            </li>
+            <li class="list__item" ng-click="getCategory(1,'Turystyka')">
+                <ons-row align="center" class="row ons-row-inner row-center">
+                    <div class="arrow"></div>
+                    <ons-col class="col ons-col-inner">Turystyka</ons-col>
+                </ons-row>
+            </li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+
+</ons-page>

@@ -1,0 +1,29 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="naviDash.popPage()">
+                <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">lista graczy</div>
+    </ons-toolbar>
+    <div class="contenHolder whiteFrame noContentPaddings">
+        <div class="task" ng-repeat="userLoop in questDetailsData.users">
+            <div class="userInList currentUser" ng-if="userLoop.id==user.id">
+                <div class="leftPart">
+                    <div class="avatar" style="background-image:url('http://daredot.dev.thickmug.com{{userLoop.image_url}}');"></div>
+                </div>
+                <span class="username">{{userLoop.username}}</span>
+                <span class="red">{{userLoop.completed}}/{{questDetailsData.tasks.length}} <span ng-if="userLoop.last_task_done_at"> | {{userLoop.last_task_done_at | date:'dd.MM.yyyy HH:mm'}}</span></span>
+            </div>
+            <div class="userInList" ng-if="userLoop.id!=user.id" ng-click="comparePlayers(questDetailsData.id,userLoop.id)">
+                <div class="arrow"></div>
+                <div class="leftPart">
+                    <div class="avatar" style="background-image:url('http://daredot.dev.thickmug.com{{userLoop.image_url}}');"></div>
+                </div>
+                <span class="username">{{userLoop.username}}</span>
+                <span class="red">{{userLoop.completed}}/{{questDetailsData.tasks.length}} <span ng-if="userLoop.last_task_done_at"> | {{userLoop.last_task_done_at | date:'dd.MM.yyyy HH:mm'}}</span></span>
+            </div>
+        </div>
+    </div>
+</ons-page>

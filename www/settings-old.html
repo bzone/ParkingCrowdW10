@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<!-- CSP support mode (required for Windows Universal apps): https://docs.angularjs.org/api/ng/directive/ngCsp -->
+<html lang="en" ng-app="app" ng-csp>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <!-- JS dependencies (order matters!) -->
+    <script src="scripts/platformOverrides.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/onsen/js/onsenui.js"></script>
+
+    <!-- CSS dependencies -->
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
+    <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css" />
+
+    <!-- CSP support mode (required for Windows Universal apps) -->
+    <link rel="stylesheet" href="lib/angular/angular-csp.css" />
+
+
+    <!-- --------------- App init --------------- -->
+    <script src="js/app.js"></script>
+    <title>Settings</title>
+</head>
+
+<body ng-controller="AppController">
+    <!-- Cordova reference -->
+    <!--<script src="cordova.js"></script>-->
+    <script src="js/jquery.js"></script>
+    <script src="scripts/index.js"></script>
+    <!-- -->
+    <style>
+    .item {
+            padding: 10px;
+            line-height: 1;
+        }
+        
+        .item-thum {
+            background-color: #ccc;
+            width: 50px;
+            height: 50px;
+            border-radius: 4px;
+        }
+        
+        .item-title {
+            font-size: 15px;
+            font-weight: 500;
+        }
+        
+        .item-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.3;
+            margin: 4px 0 0 0;
+            padding: 0 30px 0 0;
+        }
+        
+        .item-label {
+            font-size: 12px;
+            color: #999;
+            float: right;
+        }
+        #avatar {
+            width: 130px;
+            height: 130px;
+            background-size: cover;
+            border-radius:50%;
+            margin: auto;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            background-position: center center;
+        }
+        
+    </style>
+
+    <ons-page>
+        <ons-toolbar>
+            <div class="left">
+                <ons-toolbar-button onclick="navi.popPage();">
+                    <ons-icon icon="ion-chevron-left" fixed-width="false" style="font-size: 26px; vertical-align: -4px"></ons-icon>
+                </ons-toolbar-button>
+            </div>
+            <div class="center">Ustawienia</div>
+            <div class="right">
+                <ons-toolbar-button>
+                    <ons-icon icon="ion-log-out" fixed-width="false" style="font-size: 26px; vertical-align: -4px"></ons-icon>
+                </ons-toolbar-button>
+            </div>
+        </ons-toolbar>
+        <div class="text-center">
+        <div id="avatar" style="background-image:url(http://themina.net/themes/shema/img/demo/team/team_img_3.jpg);"></div>
+<a id="capturePhoto">zmień awatar</a>
+</div>
+
+        <ul class="list">
+            <li class="list__header">Modyfikuj dane osobowe</li>
+            <li class="list__item">
+                <ons-row align="center" class="row ons-row-inner row-center">
+                    <ons-col class="col ons-col-inner">Imię</ons-col>
+                    <ons-col class="col ons-col-inner">
+                        <input type="text" class="text-input text-input--transparent inputWithLabel" placeholder="Imię" value="Piotr">
+                    </ons-col>
+                </ons-row>
+            </li>
+            <li class="list__item">
+                <ons-row align="center" class="row ons-row-inner row-center">
+                    <ons-col class="col ons-col-inner">Nazwisko</ons-col>
+                    <ons-col class="col ons-col-inner">
+                        <input type="text" class="text-input text-input--transparent inputWithLabel" placeholder="Nazwisko" value="Kowalski">
+                    </ons-col>
+                </ons-row>
+            </li>
+            
+        </ul>
+
+    </ons-page>
+
+
+    
+</body>
+
+</html>

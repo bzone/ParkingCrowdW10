@@ -1,0 +1,47 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="naviDash.popPage()">
+                <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">porównanie graczy</div>
+        <div class="right">
+        </div>
+    </ons-toolbar>
+    <!-- NOTE: Pokaż wyniki drużyn - moduł -->
+    <div class="contenHolder versus">
+        <div class="vs">vs</div>
+        <div class="box12">
+            <div class="circleHolder" style="background-image:url('http://daredot.dev.thickmug.com{{user.image_url}}');" ng-if="user.image_url">
+            </div>
+            <div class="circleHolder" style="background-image:url('img/noavatar.png');" ng-if="!user.image_url">
+            </div>
+            <div class="clear"></div>{{user.first_name}}
+            <br/>{{user.last_name}}
+            <br/><strong>{{myPoints}}</strong>
+        </div>
+        <div class="box12">
+            <div class="circleHolder" style="background-image:url('http://daredot.dev.thickmug.com{{compereWith.image_url}}');" ng-if="compereWith.image_url">
+            </div>
+            <div class="circleHolder" style="background-image:url('img/noavatar.png');" ng-if="!compereWith.image_url">
+            </div>
+            <div class="clear"></div>{{compereWith.first_name}}
+            <br/>{{compereWith.last_name}}
+            <br/><strong>{{otherPoints}}</strong>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="contenHolder whiteFrame noContentPaddings">
+        <div class="task" ng-repeat="task in compare">
+            <div class="multiplayerTask">
+                <div class="whiteTeamPoints" ng-if="task.verifiedMy==0">{{task.difficulty}}</div>
+                <div class="whiteTeamPoints active" ng-if="task.verifiedMy!=0">{{task.difficulty}}</div>
+                <div class="blackTeamPoints" ng-if="task.verified==0">{{task.difficulty}}</div>
+                <div class="blackTeamPoints active" ng-if="task.verified!=0">{{task.difficulty}}</div>
+                <span class="title">{{task.name}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</ons-page>

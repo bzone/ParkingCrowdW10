@@ -1,0 +1,68 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="naviDash.popPage()">
+                <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">zadanie</div>
+        <div class="right">
+        </div>
+    </ons-toolbar>
+    <div class="contenHolder" ng-init="updateLocation()">
+        <h3>{{taskDetailsData.task.name}}</h3>
+        <p class="des">{{taskDetailsData.task.description}}</p>
+    </div>
+    <!-- NOTE: Typ zadania dystans -->
+    <div ng-if="taskDetailsData.task.type.id==6">
+        <div class="contenHolder whiteFrame noContentPaddings">
+            <div class="top" style="margin-bottom:5px;">
+                <div class="activeDot" ng-if="taskDetailsData.display.active==1"></div>
+                <div class="labelBlack">Przejedź {{taskDetailsData.display.distance}}KM:</div>
+            </div>
+            <div class="clear"></div>
+            <div class="numberDistance">{{taskDetailsData.display.tracked | number:1}}/{{taskDetailsData.display.distance | number:0}}km</div>
+            <div class="distanceProgress">
+                <div class="bar" style="width:{{taskDetailsData.display.tracked/taskDetailsData.display.distance*100}}%;"></div>
+            </div>
+        </div>
+        <div class="contenHolder  noContentPaddings">
+            <a class="submitButton" ng-if="taskDetailsData.readyToVerify==0" ng-click="distanceStart()">start</a>
+        </div>
+    </div>
+    <!-- NOTE: Typ zadania zdjecia -->
+    <div class="contenHolder whiteFrame " ng-if="taskDetailsData.task.type.id==9">
+        zdjecia hehe
+    </div>
+    <!-- NOTE: Typ zadania zdjecia -->
+    <div class="contenHolder whiteFrame " ng-if="taskDetailsData.task.type.id==10">
+        lokalizacje hehe
+    </div>
+    <!-- NOTE: Typ zadania checklista -->
+    <div class="contenHolder whiteFrame noContentPaddings" ng-if="taskDetailsData.task.type.id==8">
+        <div class="top" style="margin-bottom:5px;">
+            <div class="labelBlack">Wykonaj {{taskDetailsData.params.checklist.length}} zadania:</div>
+        </div>
+        <div class="task" ng-repeat="task in taskDetailsData.display track by $index" ng-click="toogleCheck($index)">
+            <div class="multiplayerTask checklist textLeft">
+                <div class="whiteTeamPoints" ng-if="task.status==0"></div>
+                <div class="whiteTeamPoints active" ng-if="task.status!=0"></div>
+                <span class="title">{{task.checklist}}</span>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="contenHolder  noContentPaddings">
+        <a class="submitButton inactive" ng-click="taskVerify(taskDetailsData.task.id,taskDetailsData.task.type.id)" ng-if="taskDetailsData.readyToVerify==1">prześlij do weryfikacji</a>
+        <a class="submitButton inactive" style="opacity:0.5;" ng-if="taskDetailsData.readyToVerify==0">prześlij do weryfikacji</a>
+    </div>
+    <div class="contenHolder  noContentPaddings textCenter" ng-if="taskDetailsData.progress.waiting_for_verification==1 && taskDetailsData.progress.verified==0">
+        oczekuje na weryfikację
+    </div>
+    <div class="contenHolder  noContentPaddings textCenter" ng-if="taskDetailsData.progress.verified==1">
+        zadanie zweryfikowane
+    </div>
+    <div class="clear"></div>
+</ons-page>

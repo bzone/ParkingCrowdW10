@@ -1,0 +1,992 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+
+@-o-viewport {
+    width: 450px;
+}
+
+@viewport {
+    width: 450px;
+}
+
+@-ms-viewport {
+    width: 450px;
+    zoom-user: fixed;
+    max-zoom: 1;
+    min-zoom: 1;
+}
+
+* {
+    zoom: 1;
+    -ms-content-zooming: none;
+}
+
+body,
+html {
+    -ms-overflow-style: none !important;
+}
+
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+}
+
+@-webkit-keyframes rotating
+/* Safari and Chrome */
+
+{
+    from {
+        -ms-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -ms-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotating {
+    from {
+        -ms-transform: rotate(0deg);
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+    to {
+        -ms-transform: rotate(360deg);
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+body {
+    -webkit-touch-callout: none;
+    /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;
+    /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;
+    /* prevent copy paste, to allow, change 'none' to 'text' */
+    font-family: Arial, sans-serif !important;
+    font-size: 12px;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    -ms-content-zooming: none;
+    background-color: #E60E2A;
+}
+
+.page__content {
+    background-color: #FFFFFF !important;
+}
+
+
+/*NOTE Spiner */
+
+#spinnerIcon {
+    -webkit-animation: rotating 2s linear infinite;
+    animation: rotating 2s linear infinite;
+    background: url(spinner.png);
+    background-size: 32px 32px;
+    width: 100px;
+    height: 100px;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+#spinnerOk {
+    width: 100px;
+    height: 100px;
+    color: #FFF;
+    text-align: center;
+    line-height: 100px;
+    font-size: 30px;
+    -webkit-animation: zoomIn 1s linear 1;
+    animation: zoomIn 1s linear 1;
+}
+
+#spinner {
+    width: 100px;
+    height: 100px;
+    position: fixed;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.9);
+    left: 50%;
+    top: 50%;
+    margin-left: -50px;
+    margin-top: -50px;
+    text-align: center;
+    line-height: 100px;
+    z-index: 9999;
+}
+
+
+/*NOTE: Login Pages */
+
+form.loginStyle {
+    width: 80%;
+    margin: auto;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    background-color: #FFF;
+    color: #000;
+    border-radius: 23px;
+    text-align: center;
+    box-sizing: border-box;
+    border: solid 1px #000;
+    height: 46px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-family: Arial, sans-serif !important;
+}
+
+input::-webkit-input-placeholder {
+    color: #CCC;
+}
+
+input:-ms-input-placeholder {
+    color: #CCC;
+}
+
+.submitButton {
+    width: 100%;
+    padding: 10px;
+    background-color: #09CA8A;
+    color: #FFF;
+    border-radius: 23px;
+    text-align: center;
+    box-sizing: border-box;
+    border: 0;
+    height: 46px;
+    font-size: 16px;
+    margin-bottom: 0px;
+    display: block;
+    line-height: 26px;
+}
+
+.submitButton.alternative {
+    background-color: #02458D;
+}
+
+.submitButton.white {
+    background-color: #FFF;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+.lub,
+.passwordReset {
+    color: #000;
+    display: block;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.bigLogo {
+    width: 100%;
+    height: 160px;
+    background: url(logo.png);
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.loginBg .page__content {
+    /* background-image: url(homebg.png) !important; */
+    background-size: cover;
+    background-position: bottom center;
+}
+
+p.recover {
+    text-align: center;
+}
+
+.logoMargin {
+    margin-top: -25px;
+}
+
+
+/* Home/dash */
+
+.page--menu-page__background {
+    background-color: #09CA8A;
+    color: white;
+}
+
+.menu-close,
+.menu-close > .toolbar-button {
+    color: #999;
+}
+
+.menu-list,
+.menu-item:first-child,
+.menu-item {
+    background-color: transparent;
+    background-image: none !important;
+    border-color: transparent;
+    color: #fff;
+}
+
+.menu-item {
+    padding: 0 0 0 20px;
+    line-height: 52px;
+    height: 52px;
+    text-shadow: rgba(0, 0, 0, 0.4) 0px 1px 0px;
+}
+
+.menu-item:active {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-notification {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 14px;
+    height: 16px;
+    line-height: 16px;
+    min-width: 16px;
+    font-weight: 600;
+}
+
+.bottom-menu-list,
+.bottom-menu-item:first-child,
+.bottom-menu-item {
+    border-color: #000000;
+    background-color: transparent;
+    background-image: none !important;
+    color: #000;
+}
+
+.bottom-menu-item:active {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+ons-page.ng-scope.page.page--menu-page,
+ons-page.ng-scope.page.page--menu-page .page__content {
+    background-color: #FFFFFF !important;
+}
+
+a.submitButton.logOut {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 20px;
+    background-color: #FF4477;
+    position: absolute;
+    bottom: 25px;
+}
+
+.menuIcon {
+    float: left;
+    width: 34px;
+    height: 34px;
+    background-color: #E60E2A;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-top: 5px;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.menuIcon.home {
+    background-image: url(home_menu_icon.png);
+}
+
+.menuIcon.yourQuests {
+    background-image: url(chellenges_menu_icon.png);
+}
+
+.menuIcon.newQuest {
+    background-image: url(add_new_menu_icon.png);
+}
+
+.menuIcon.stats {
+    background-image: url(stats_menu_icon.png);
+}
+
+.menuIcon.settings {
+    background-image: url(settings_menu_icon.png);
+}
+
+.dashboard {
+    padding: 5%;
+}
+
+.avatar {
+    width: 164px;
+    height: 164px;
+    margin: auto;
+    border-radius: 50%;
+    border: 0px;
+    box-shadow: inset 0px 0px 3px 2px rgba(0, 0, 0, 0.2);
+    background-size: cover;
+    background-position: center center;
+    margin-bottom: 20px;
+}
+
+.userEmail {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.box13 {
+    box-sizing: border-box;
+    float: left;
+    width: 33.33%;
+    text-align: center;
+}
+
+span.white {
+    color: #FFF;
+    display: block;
+    font-weight: bold;
+    font-size: 34px;
+    margin-bottom: 10px;
+}
+
+.lastChallenge {
+    background-color: #FFF;
+    border-radius: 10px;
+    clear: both;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.top {
+    padding: 15px;
+    position: relative;
+}
+
+.labelBlack {
+    background-color: #000;
+    float: left;
+    color: #FFF;
+    padding: 3px 9px;
+    text-transform: uppercase;
+    font-size: 14px;
+    border-radius: 10px;
+}
+
+.clear {
+    clear: both;
+}
+
+.bottom {
+    border-top: solid 1px #CCC;
+}
+
+.bottom .box13 {
+    padding: 10px;
+    color: #828282;
+    /* line-height: 42px; */
+}
+
+span.title {
+    font-size: 20px;
+    margin-top: 10px;
+    display: block;
+}
+
+.doneChart {
+    width: 36px;
+    height: 36px;
+    border: solid 3px #E60E2A;
+    border-radius: 50%;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    float: left;
+    margin-right: 10px;
+}
+
+.doneChart.white {
+    width: 36px;
+    height: 36px;
+    border: solid 3px #FFFFFF;
+    border-radius: 50%;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    float: left;
+    margin-right: 10px;
+}
+
+.locationIcon,
+.playersIcon,
+.pointsIcon {
+    width: 36px;
+    height: 36px;
+    border: solid 3px #E60E2A;
+    background-color: #E60E2A;
+    border-radius: 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    float: left;
+    margin-right: 10px;
+}
+
+.playersIcon {
+    background-image: url(players.png);
+}
+
+.pointsIcon {
+    background-image: url(pointsicon.png);
+    background-color: #FFF;
+}
+
+.pointsIcon.white {
+    background-image: url(pointsiconwhite.png);
+    border-color: #FFF;
+    background-color: transparent;
+}
+
+.playersIcon.white {
+    background-image: url(playerswhite.png);
+    border-color: #FFF;
+}
+
+.playersIcon.black {
+    background-image: url(playersblack.png);
+    border-color: #2F2A2B;
+}
+
+.locationIcon {
+    background-image: url(leaderboard_icon.png);
+}
+
+.locationIcon.white {
+    background-image: url(leaderboard_iconwhite.png);
+    border-color: #FFF;
+}
+
+.doneChart .bar {
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    background-color: #E60E2A;
+}
+
+.doneChart.white .bar {
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    background-color: #FFF;
+}
+
+.margin16p {
+    margin-left: 16.5%;
+}
+
+.whiteText {
+    color: #FFF;
+}
+
+.displayInlineBlock {
+    display: inline-block;
+}
+
+.textCenter {
+    text-align: center;
+}
+
+.textRight {
+    text-align: right;
+}
+
+.textLeft {
+    text-align: left;
+}
+
+.userName {
+    color: #000;
+    text-align: center;
+    font-weight: bold;
+    font-size: 33px;
+}
+
+.boxText.ng-binding {
+    display: inline-block;
+    line-height: 42px;
+    float: right;
+}
+
+.box13.borderRight {
+    border-right: solid 1px #CCC;
+}
+
+.contenHolder {
+    width: 90%;
+    margin: auto;
+    box-sizing: border-box;
+    margin-bottom: 25px;
+    margin-top: 25px;
+}
+
+.whiteFrame {
+    background-color: #FFF;
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size:
+}
+
+.whiteFrame .list {
+    font-size: 15px !important;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: none;
+    line-height: normal;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 17px;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    text-align: left;
+    overflow: auto;
+    display: block;
+    -webkit-overflow-scrolling: touch;
+    padding: 0;
+    background-color: #fff;
+    border-top: 0px solid #000;
+    border-bottom: 0px solid #000;
+    background-color: #fff;
+}
+
+.whiteFrame .list__item {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    list-style: none;
+    box-sizing: border-box;
+    display: block;
+    padding: 0 10px 0 10px;
+    margin: 0 0 0 0;
+    border-top: none;
+    border-bottom: 1px solid #CCC;
+    color: #000;
+    background-color: transparent;
+    min-height: 44px;
+    line-height: 44px;
+    background-image: none;
+}
+
+.whiteFrame .list__item:last-child {
+    border: none;
+}
+
+.whiteFrame .list input {
+    text-align: right;
+    height: 40px;
+}
+
+
+/* Statystykie */
+
+.badge {
+    text-align: center;
+}
+
+.badge img {
+    width: 68px;
+    height: 68px;
+    display: inline-block;
+}
+
+.contentPaddings {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.noContentPaddings {
+    padding: 0px !important;
+}
+
+.marginB {
+    margin-bottom: 20px;
+}
+
+ons-icon.ng-scope.ons-icon.ons-icon--ion.ion-navicon {
+    width: 28px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('menu-icon.png');
+}
+
+ons-icon.ng-scope.ons-icon.ons-icon--ion.ion-navicon:before {
+    content: "";
+}
+
+ons-icon.ng-scope.ons-icon.ons-icon--ion.ion-ios-arrow-back {
+    width: 28px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('backarrow.png');
+}
+
+ons-icon.ng-scope.ons-icon.ons-icon--ion.ion-ios-arrow-back:before {
+    content: "";
+}
+
+ons-icon.ng-scope.ons-icon.ons-icon--ion.ion-grid {
+    width: 28px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('notification.png');
+    background-position: center center;
+}
+
+ons-icon.ng-scope.ons-icon.ons-icon--ion.ion-grid:before {
+    content: "";
+}
+
+.task .title {
+    margin-top: 0px;
+}
+
+.task .top {
+    position: relative;
+}
+
+.arrow {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    background-size: 15px 24px;
+    background-repeat: no-repeat;
+    margin-top: -12px;
+    width: 15px;
+    height: 24px;
+    display: block;
+    background-image: url(arrow.png);
+}
+
+.red {
+    color: #E5162F;
+}
+
+.emptyState {
+    padding-top: 100px;
+    color: #FFF;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.emptyCircle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: solid 8px #FFF;
+    margin: auto;
+}
+
+
+/* detale zestawu */
+
+.versus {
+    text-align: center;
+    color: #FFF;
+    position: relative;
+}
+
+.box12 {
+    width: 50%;
+    float: left;
+}
+
+.circleHolder {
+    width: 108px;
+    height: 108px;
+    margin: auto;
+    border-radius: 50%;
+    border: solid 2px #CFF;
+    box-shadow: inset 0px 0px 0px 4px #E60E2A, inset 0px 0px 0px 8px rgba(0, 0, 0, 0.4);
+    background-size: cover;
+    background-position: center center;
+    margin-bottom: 10px;
+    background-color: #FFF;
+    line-height: 108px;
+    color: #000;
+    font-size: 27px;
+}
+
+.vs {
+    position: absolute;
+    top: 44px;
+    width: 100%;
+    display: block;
+    left: 0px;
+}
+
+.circleHolder.black {
+    color: #FFF;
+    background-color: #231F20;
+}
+
+.multiplayerTask {
+    position: relative;
+}
+
+.whiteTeamPoints {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: solid 2px #E60E2A;
+    background-color: #FFF;
+    text-align: center;
+    line-height: 32px;
+    color: #9B9B9B;
+    top: 16px;
+    left: 25px;
+}
+
+.checklist .whiteTeamPoints {
+    position: absolute;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    border: solid 2px #E60E2A;
+    background-color: #FFF;
+    text-align: center;
+    line-height: 32px;
+    color: #9B9B9B;
+    top: 16px;
+    left: 15px;
+}
+
+.checklist .whiteTeamPoints.active {
+    position: absolute;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    border: solid 2px #E60E2A;
+    background-color: #E60E2A;
+    text-align: center;
+    line-height: 32px;
+    color: #9B9B9B;
+    top: 16px;
+    left: 15px;
+    background-image: url('check.png');
+    background-size: 25px 25px;
+    background-repeat: no-repeat;
+    background-position: 4px 4px;
+}
+
+.checklist .title {
+    text-align: left !important;
+    padding-left: 70px !important;
+}
+
+.blackTeamPoints {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: solid 2px #E60E2A;
+    background-color: #FFF;
+    text-align: center;
+    line-height: 32px;
+    color: #9B9B9B;
+    top: 16px;
+    right: 25px;
+}
+
+.type {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: solid 2px #E60E2A;
+    background-color: #E60E2A;
+    text-align: center;
+    line-height: 32px;
+    background-size: contain;
+    color: #9B9B9B;
+    top: 15px;
+    left: 20px;
+}
+
+.type6 {
+    background-image: url(typedy.png);
+}
+
+.type8 {
+    background-image: url(typeli.png);
+}
+
+.type9 {
+    background-image: url(typezd.png);
+}
+
+.type10 {
+    background-image: url(typemi.png);
+}
+
+.whiteTeamPoints.active,
+.blackTeamPoints.active {
+    background-color: #231F20;
+    color: #FFFFFF;
+    box-shadow: inset 0px 0px 0px 3px #E60E2A;
+}
+
+.multiplayerTask .title {
+    width: 100%;
+    padding-left: 80px;
+    padding-right: 80px;
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 25px;
+    box-sizing: border-box;
+    border-bottom: solid 1px #CCC;
+    font-size: 14px;
+}
+
+h3 {
+    color: #FFF;
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+p.des {
+    text-align: center;
+    margin-top: 0px;
+    margin-bottom: 30px;
+}
+
+.userInList {
+    border-bottom: solid 1px #CCC;
+    position: relative;
+    padding-left: 80px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 52px;
+}
+
+.userInList .leftPart {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
+.userInList .leftPart .avatar {
+    width: 50px;
+    height: 50px;
+    margin: auto;
+    border-radius: 50%;
+    border: solid 2px #CFF;
+    box-shadow: inset 0px 0px 0px 2px #E60E2A, inset 0px 0px 0px 4px rgba(0, 0, 0, 0.4);
+    background-size: cover;
+    background-position: center center;
+    margin-bottom: 20px;
+}
+
+span.username {
+    font-size: 1.2em;
+    padding-top: 5px;
+    display: block;
+}
+
+.userInList.currentUser {
+    background-color: #F2F2F2;
+}
+
+span.location {
+    display: block;
+    float: left;
+    width: 40px;
+    height: 54px;
+    line-height: 54px;
+    color: #E5162F;
+}
+
+.userInList.ranking {
+    padding-left: 125px;
+}
+
+.userInList.ranking .leftPart .avatar {
+    float: left;
+}
+
+
+/* Dystans */
+  z poxo xjxuj/..jy 
+.numberDistance {
+    width: 100%;
+    text-align: center;
+    font-size: 50px;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    color: #E60E2A;
+}
+
+.distanceProgress {
+    height: 20px;
+    background-color: #E8E8E8;
+    margin: 16px;
+    border-radius: 10px;
+}
+
+.distanceProgress .bar {
+    height: 20px;
+    background-color: #E60E2A;
+    border-radius: 10px;
+    width: 70%;
+}
+
+.activeDot {
+    background-color: #8FD641;
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    border-radius: 50%;
+    right: 15px;
+}
+
+.ons-sliding-menu-inner {
+    box-shadow: 20px 20px 100px rgba(0, 0, 0, 0.21) !important;
+}

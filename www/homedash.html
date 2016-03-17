@@ -1,0 +1,53 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="menu.toggleMenu()">
+                <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">daredot</div>
+        <div class="right">
+            <ons-toolbar-button ng-click="openNotifications()">
+                <ons-icon icon="ion-grid" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+    </ons-toolbar>
+    <div class="dashboard">
+        <div class="avatar" style="background-image:url('http://daredot.dev.thickmug.com{{user.image_url}}');"></div>
+        <div class="userName">{{user.username}}</div>
+        <div class="userEmail">{{user.email}}</div>
+        <div class="box13"><span class="white">{{user.finished_challenges}}</span>ukończone
+            <br/>wyzwania</div>
+        <div class="box13"><span class="white">{{user.finished_challenges}}</span>utworzone
+            <br/>wyzwania</div>
+        <div class="box13"><span class="white">{{user.total_badges}}</span>zdobyte
+            <br/>odznaki</div>
+        <div class="clear"></div>
+        <div class="lastChallenge" ng-click="questDetails(user.last_challenge.id)">
+            <div class="top">
+                <div class="arrow"></div>
+                <div class="labelBlack">Ostatnie wyzwanie</div>
+                <div class="clear"></div>
+                <span class="title">{{user.last_challenge.name}}</span>
+            </div>
+            <div class="bottom">
+                <div class="box13 borderRight">
+                    <div class="doneChart">
+                        <div class="bar" style="height:{{user.last_challenge.stats.number_of_done_tasks/user.last_challenge.tasks.length*100}}%"></div>
+                    </div>
+                    <div class="boxText">{{user.last_challenge.stats.number_of_done_tasks}}/{{user.last_challenge.tasks.length}}</div>
+                </div>
+                <div class="box13 borderRight">
+                    <div class="playersIcon"></div>
+                    <div class="boxText">0{{user.last_challenge.stats.number_of_users}}</div>
+                </div>
+                <div class="box13">
+                    <div class="locationIcon"></div>
+                    <div class="boxText">#0{{user.last_challenge.stats.location}}</div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <a class="submitButton alternative" ng-click="openYourQuests()">wszystkie aktywne wyzwania</a>
+    </div>
+</ons-page>

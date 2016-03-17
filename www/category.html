@@ -1,0 +1,42 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="naviDash.popPage()">
+                <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">{{categoryName}}</div>
+        <div class="right">
+        </div>
+    </ons-toolbar>
+    <div class="emptyState" ng-if="tasksInCategory.length==0">
+        <div class="emptyCircle"></div>
+        <p>Brak zadań w tej kategori</p>
+    </div>
+    <div class="contenHolder whiteFrame noContentPaddings" id="activeTasks">
+        <div class="task" ng-repeat="task in tasksInCategory" ng-click="questDetails(task.id)">
+            <div class="top">
+                <div class="arrow"></div>
+                <div class="clear"></div>
+                <span class="title">{{task.name}}</span><span class="red">koniec: {{task.finish_date | date:'dd.MM.yyyy HH:mm'}}</span>
+            </div>
+            <div class="bottom">
+                <div class="box13 borderRight">
+                    <div class="pointsIcon"></div>
+                    <div class="boxText">{{task.tasks.length}}</div>
+                </div>
+                <div class="box13 borderRight">
+                    <div class="playersIcon"></div>
+                    <div class="boxText">0{{task.stats.number_of_users}}</div>
+                </div>
+                <div class="box13">
+                    <div class="boxText" ng-if="task.multiplayer==1">Gra
+                        <br/>drużynowa</div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+</ons-page>

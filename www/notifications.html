@@ -1,0 +1,23 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="naviDash.popPage()">
+                <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">notyfikacje</div>
+    </ons-toolbar>
+    <div class="contenHolder whiteFrame noContentPaddings">
+        <div class="task" ng-repeat="element in notifications">
+            <div class="userInList" ng-if="element.action=='assign_challenge'" ng-click="questDetails(element.object_id)" style="height: 66px;">
+                <div class="arrow"></div>
+                <div class="leftPart">
+                    <div class="avatar" style="background-image:url('http://daredot.dev.thickmug.com{{element.sender.image_url}}');" ng-if="element.sender.image_url!='null'"></div>
+                    <div class="avatar" style="background-image:url('img/noavatar.png');" ng-if="element.sender.image_url=='null'"></div>
+                </div>
+                <span class="username" style="font-size:16px;">Zaproszenie do zestawu:<br/>{{element.object.name}}</span>
+                <span class="red">{{element.sender.first_name}} {{element.sender.last_name}}</span>
+            </div>
+        </div>
+    </div>
+</ons-page>

@@ -1,0 +1,34 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="menu.toggleMenu()">
+                <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">Statystyki</div>
+        <div class="right">
+
+        </div>
+    </ons-toolbar>
+
+    <div class="contenHolder">
+
+        <div class="box13"><span class="white">{{user.finished_challenges}}</span>ukończone
+            <br/>wyzwania</div>
+        <div class="box13"><span class="white">{{user.finished_challenges}}</span>utworzone
+            <br/>wyzwania</div>
+        <div class="box13"><span class="white">{{user.total_badges}}</span>zdobyte
+            <br/>odznaki</div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+    <div class="contenHolder whiteFrame contentPaddings">
+        <div class="labelBlack marginB">Zdobyte odznaki</div>
+        <div class="clear"></div>
+        <div class="badge box13" ng-repeat="badge in user.last_badges">
+            <img src="img/badge.png" />
+            <div class="clear"></div> {{badge.name}}
+        </div>
+    </div>
+    <div class="clear"></div>
+</ons-page>

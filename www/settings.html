@@ -1,0 +1,92 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="menu.toggleMenu()">
+                <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">Ustawienia</div>
+        <div class="right">
+
+        </div>
+    </ons-toolbar>
+
+    <div class="contenHolder">
+        <div id="avatarPreview" class="avatar" style="background-image:url('http://daredot.dev.thickmug.com{{user.image_url}}');"></div>
+
+        <a class="submitButton " ng-click="changeAvatar()">Zmień awatar</a>
+    </div>
+    <div class="clear"></div>
+    <div class="contenHolder whiteFrame">
+        <ul class="list">
+            <li class="list__item">
+                <ons-row align="center" class="row ons-row-inner row-center">
+                    <ons-col class="col ons-col-inner">Nazwa użytkownika</ons-col>
+                    <ons-col class="col ons-col-inner">
+                        <input type="text" class="text-input text-input--transparent inputWithLabel" placeholder="Nazwa użytkownika" ng-model="user.username" ng-init="user.username">
+                    </ons-col>
+                </ons-row>
+            </li>
+            <li class="list__item">
+                <ons-row align="center" class="row ons-row-inner row-center">
+                    <ons-col class="col ons-col-inner">Imię</ons-col>
+                    <ons-col class="col ons-col-inner">
+                        <input type="text" class="text-input text-input--transparent inputWithLabel" placeholder="Imię" ng-model="user.first_name" ng-init="user.first_name">
+                    </ons-col>
+                </ons-row>
+            </li>
+            <li class="list__item">
+                <ons-row align="center" class="row ons-row-inner row-center">
+                    <ons-col class="col ons-col-inner">Nazwisko</ons-col>
+                    <ons-col class="col ons-col-inner">
+                        <input type="text" class="text-input text-input--transparent inputWithLabel" placeholder="Nazwisko" ng-model="user.last_name" ng-init="user.last_name">
+                    </ons-col>
+                </ons-row>
+            </li>
+            <li class="list__item">
+                <ons-row align="center" class="row ons-row-inner row-center">
+                    <ons-col class="col ons-col-inner">E-mail</ons-col>
+                    <ons-col class="col ons-col-inner">
+                        <input type="text" class="text-input text-input--transparent inputWithLabel" placeholder="E-mail" ng-model="user.email" ng-init="user.email">
+                    </ons-col>
+                </ons-row>
+            </li>
+            <li class="list__item">
+                <ons-row align="center" class="row ons-row-inner row-center">
+                    <ons-col class="col ons-col-inner">Nowe hasło</ons-col>
+                    <ons-col class="col ons-col-inner">
+                        <input type="password" class="text-input text-input--transparent inputWithLabel" placeholder="Nowe hasło" ng-model="user.newpassword">
+                    </ons-col>
+                </ons-row>
+            </li>
+            <li class="list__item">
+                <ons-row align="center" class="row ons-row-inner row-center">
+                    <ons-col class="col ons-col-inner">Powtórz hasło</ons-col>
+                    <ons-col class="col ons-col-inner">
+                        <input type="password" class="text-input text-input--transparent inputWithLabel" placeholder="Powtórz hasło" ng-model="user.newpasswordr">
+                    </ons-col>
+                </ons-row>
+            </li>
+            <li class="list__item">
+                <ons-row align="center" class="row ons-row-inner row-center">
+                    <ons-col class="col ons-col-inner">Facebook ID</ons-col>
+                    <ons-col class="col ons-col-inner">
+                        <input type="text" class="text-input text-input--transparent inputWithLabel" placeholder="Facebook ID" ng-model="user.facebook_id" ng-init="user.facebook_id">
+                    </ons-col>
+                </ons-row>
+            </li>
+            <li class="list__item">
+                <ons-row align="center" class="row ons-row-inner row-center">
+                    <ons-col class="col ons-col-inner">Twitter ID</ons-col>
+                    <ons-col class="col ons-col-inner">
+                        <input type="text" class="text-input text-input--transparent inputWithLabel" placeholder="Twitter ID" ng-model="user.twitter_id" ng-init="user.twitter_id">
+                    </ons-col>
+                </ons-row>
+            </li>
+        </ul>
+    </div>
+    <div class="clear"></div>
+    <div class="contenHolder">
+        <a class="submitButton alternative" ng-click="saveSettings()">Zapisz ustawienia</a>
+    </div>
+</ons-page>

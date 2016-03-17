@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<!-- CSP support mode (required for Windows Universal apps): https://docs.angularjs.org/api/ng/directive/ngCsp -->
+<html lang="en" ng-app="app" ng-csp>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densitydpi=high-dpi, user-scalable=0" />
+
+    <!-- JS dependencies (order matters!) -->
+    <script src="scripts/platformOverrides.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/onsen/js/onsenui.js"></script>
+
+    <!-- CSS dependencies -->
+
+    <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
+    <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css" />
+    <link rel="stylesheet" href="css/index.css" />
+    <!-- CSP support mode (required for Windows Universal apps) -->
+    <link rel="stylesheet" href="lib/angular/angular-csp.css" />
+    <!-- --------------- App init --------------- -->
+    <script src="js/app.js"></script>
+    <title>Parking Crowd</title>
+</head>
+
+<body ng-controller="AppController">
+   <!--http://maps.googleapis.com/maps/api/staticmap?center=51.7505486,19.533163&zoom=15&scale=2&size=375x220&maptype=roadmap&key=AIzaSyAtxSIxBFohxnPNp2BYs9ysrHY_cKJxblA&format=png&visual_refresh=true&markers=icon:http://dl.dropboxusercontent.com/u/28981503/mappoint.png%7Cshadow:false%7C51.7505486,19.533163 -->
+    <!-- Cordova reference -->
+    <script src="cordova.js"></script>
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery.easypiechart.js"></script>
+    <script src="scripts/index.js"></script>
+
+    <div class="spinner" id="spinner" style="display:none;">
+        <div id="spinnerOk" style="display:none;"><i class="ion-checkmark-round"></i></div>
+        <div id="spinnerIcon"></div>
+    </div>
+
+
+    <ons-navigator var="navi">
+        <ons-page style="background-color:#E60E2A !Important;" class="loginBg">
+            <form class="loginStyle">
+                <div class="bigLogo"></div>
+                <input type="email" id="loginEmail" class="loginInputStyle" placeholder="e-mail" value="max@test.pl" />
+                <input type="password" id="loginPassword" class="loginInputStyle" placeholder="hasło" value="mmm" />
+                <a class="submitButton" ng-click="loginUser()">zaloguj się</a>
+                <br/>
+                <span class="lub">lub</span>
+                <a class="submitButton alternative" onclick="navi.pushPage('register.html', { animation : 'slide' } )">utwórz nowe konto</a>
+                <br/>
+                <a class="passwordReset" onclick="navi.pushPage('recovery.html', { animation : 'slide' } )">zapomniałeś hasła?</a>
+            </form>
+        </ons-page>
+    </ons-navigator>
+
+
+    <ons-template id="register.html">
+
+        <ons-page class="loginBg">
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button onclick="navi.popPage();">
+                        <ons-icon icon="ion-chevron-left" fixed-width="false" style="font-size: 26px; vertical-align: -4px"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <form class="loginStyle">
+                <div class="bigLogo logoMargin"></div>
+                <input type="text" id="newUserName" class="loginInputStyle" placeholder="nazwa użytkownika" />
+                <input type="email" id="newUserEmail" class="loginInputStyle" placeholder="e-mail" />
+                <input type="password" id="newUserPassword" class="loginInputStyle" placeholder="hasło" />
+                <a class="submitButton" ng-click="registerUser()">Utwórz konto i zaloguj</a>
+                <br/>
+            </form>
+        </ons-page>
+    </ons-template>
+
+
+    <ons-template id="recovery.html">
+        <ons-page class="loginBg">
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button onclick="navi.popPage();">
+                        <ons-icon icon="ion-chevron-left" fixed-width="false" style="font-size: 26px; vertical-align: -4px"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <form class="loginStyle">
+                <div class="bigLogo logoMargin"></div>
+
+                <p class="recover">Podaj nazwę uzytkownika i adres e-mail powiązany z Twoim kontem.
+                    <br/>Na podany adres otrzymasz przypomnienia swojego hasła.</p>
+                <br/>
+                <input type="text" id="recoverUser" class="loginInputStyle" placeholder="twoja nazwa użytkownika" />
+                <input type="email" id="recoverEmail" class="loginInputStyle" placeholder="twój e-mail" />
+                <a class="submitButton" ng-click="recoverPassword()">zresetuj hasło</a>
+                <br/>
+            </form>
+        </ons-page>
+    </ons-template>
+
+
+    <ons-template id="home.html">
+        <ons-page>
+            <ons-sliding-menu main-page="dash.html" menu-page="menu.html" max-slide-distance="260px" type="push" var="menu">
+            </ons-sliding-menu>
+        </ons-page>
+    </ons-template>
+
+    <ons-template id="dash.html">
+        <ons-navigator var="naviDash">
+            <ons-page>
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-toolbar-button ng-click="menu.toggleMenu()">
+                            <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                    <div class="center">daredot</div>
+                    <div class="right">
+                        <ons-toolbar-button ng-click="openNotifications()">
+                            <ons-icon icon="ion-grid" size="28px" fixed-width="false"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                </ons-toolbar>
+                <div class="dashboard">
+                    <div class="avatar" style="background-image:url('http://daredot.dev.thickmug.com{{user.image_url}}');"></div>
+                    <div class="userName">{{user.username}}</div>
+                    <div class="userEmail">{{user.email}}</div>
+                    <div class="box13"><span class="white">{{user.finished_challenges}}</span>ukończone
+                        <br/>wyzwania</div>
+                    <div class="box13"><span class="white">{{user.finished_challenges}}</span>utworzone
+                        <br/>wyzwania</div>
+                    <div class="box13"><span class="white">{{user.total_badges}}</span>zdobyte
+                        <br/>odznaki</div>
+                    <div class="clear"></div>
+                    <div class="lastChallenge" ng-click="questDetails(user.last_challenge.id)">
+                        <div class="top">
+                            <div class="arrow"></div>
+                            <div class="labelBlack">Ostatnie wyzwanie</div>
+                            <div class="clear"></div>
+                            <span class="title">{{user.last_challenge.name}}</span>
+                        </div>
+                        <div class="bottom">
+                            <div class="box13 borderRight">
+                                <div class="doneChart">
+                                    <div class="bar" style="height:{{user.last_challenge.stats.number_of_done_tasks/user.last_challenge.tasks.length*100}}%"></div>
+                                </div>
+                                <div class="boxText">{{user.last_challenge.stats.number_of_done_tasks}}/{{user.last_challenge.tasks.length}}</div>
+                            </div>
+                            <div class="box13 borderRight">
+                                <div class="playersIcon"></div>
+                                <div class="boxText">0{{user.last_challenge.stats.number_of_users}}</div>
+                            </div>
+                            <div class="box13">
+                                <div class="locationIcon"></div>
+                                <div class="boxText">#0{{user.last_challenge.stats.location}}</div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <a class="submitButton alternative" ng-click="openYourQuests()">wszystkie aktywne wyzwania</a>
+                </div>
+            </ons-page>
+        </ons-navigator>
+    </ons-template>
+
+    <ons-template id="menu.html">
+        <ons-page modifier="menu-page">
+            <ons-toolbar modifier="transparent">
+                <div class="right">
+                    <ons-toolbar-button class="menu-closeMenu" ng-click="menu.closeMenu()">
+                        </ons-icon>Close
+                    </ons-toolbar-button>
+                </div>
+            </ons-toolbar>
+            <ons-list class="bottom-menu-list">
+                <ons-list-item class="bottom-menu-item" ng-click="openHome()">
+                    <div class="menuIcon home"></div> Ekran główny
+                </ons-list-item>
+
+                <ons-list-item class="bottom-menu-item" ng-click="openYourQuests()">
+                    <div class="menuIcon yourQuests"></div> Twoje wyzwania
+                </ons-list-item>
+
+                <ons-list-item class="bottom-menu-item" ng-click="openNewQuests()">
+                    <div class="menuIcon newQuest"></div> Nowe wyzwanie
+                </ons-list-item>
+
+                <ons-list-item class="bottom-menu-item" ng-click="openStats()">
+                    <div class="menuIcon stats"></div> Statystyki
+                </ons-list-item>
+
+                <ons-list-item class="bottom-menu-item" ng-click="openSettings()">
+                    <div class="menuIcon settings"></div> Ustawienia
+                </ons-list-item>
+            </ons-list>
+            <a class="submitButton logOut" ng-click="logOut()">Wyloguj</a>
+        </ons-page>
+    </ons-template>
+</body>
+
+</html>

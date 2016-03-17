@@ -1,0 +1,81 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="menu.toggleMenu()">
+                <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">Twoje wyzwania</div>
+        <div class="right">
+        </div>
+    </ons-toolbar>
+    <div class="navigation-bar">
+        <div class="navigation-bar__center">
+            <div class="button-bar" style="width:90%;margin:7px 5%; ">
+                <div class="button-bar__item" ng-click="showActiveTasks()">
+                    <input type="radio" name="navi-segment-a" checked>
+                    <div class="button-bar__button">Aktywne</div>
+                </div>
+
+                <div class="button-bar__item" ng-click="showDoneTasks()">
+                    <input type="radio" name="navi-segment-a">
+                    <div class="button-bar__button">Ukończone</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contenHolder whiteFrame noContentPaddings" id="activeTasks">
+        <div class="task" ng-repeat="task in activeTasks" ng-click="questDetails(task.id)">
+            <div class="top">
+                <div class="arrow"></div>
+                <div class="clear"></div>
+                <span class="title">{{task.name}}</span><span class="red">koniec: {{task.finish_date | date:'dd.MM.yyyy HH:mm'}}</span>
+            </div>
+            <div class="bottom">
+                <div class="box13 borderRight">
+                    <div class="doneChart">
+                        <div class="bar" style="height:{{task.stats.number_of_done_tasks/task.tasks.length*100}}%"></div>
+                    </div>
+                    <div class="boxText">{{task.stats.number_of_done_tasks}}/{{task.tasks.length}}</div>
+                </div>
+                <div class="box13 borderRight">
+                    <div class="playersIcon"></div>
+                    <div class="boxText">0{{task.stats.number_of_users}}</div>
+                </div>
+                <div class="box13">
+                    <div class="locationIcon"></div>
+                    <div class="boxText">#0{{task.stats.location}}</div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="contenHolder whiteFrame noContentPaddings" id="doneTasks" style="display:none;">
+        <div class="task" ng-repeat="task in doneTasks" ng-click="questDetails(task.id)">
+            <div class="top">
+                <div class="arrow"></div>
+                <div class="clear"></div>
+                <span class="title">{{task.name}}</span><span class="red">koniec: {{task.finish_date | date:'dd.MM.yyyy HH:mm'}}</span>
+            </div>
+            <div class="bottom">
+                <div class="box13 borderRight">
+                    <div class="doneChart">
+                        <div class="bar" style="height:{{task.stats.number_of_done_tasks/task.tasks.length*100}}%"></div>
+                    </div>
+                    <div class="boxText">{{task.stats.number_of_done_tasks}}/{{task.tasks.length}}</div>
+                </div>
+                <div class="box13 borderRight">
+                    <div class="playersIcon"></div>
+                    <div class="boxText">0{{task.stats.number_of_users}}</div>
+                </div>
+                <div class="box13">
+                    <div class="locationIcon"></div>
+                    <div class="boxText">#0{{task.stats.location}}</div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</ons-page>
