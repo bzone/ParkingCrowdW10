@@ -214,7 +214,7 @@ input:-ms-input-placeholder {
 }
 
 .loginBg .page__content {
-    /* background-image: url(homebg.png) !important; */
+    background-image: url(homebg.png) !important;
     background-size: cover;
     background-position: bottom center;
 }
@@ -273,10 +273,11 @@ p.recover {
 .bottom-menu-list,
 .bottom-menu-item:first-child,
 .bottom-menu-item {
-    border-color: #000000;
+    border-color: #FFFFFF;
     background-color: transparent;
     background-image: none !important;
     color: #000;
+    font-weight: bold;
 }
 
 .bottom-menu-item:active {
@@ -299,7 +300,7 @@ a.submitButton.logOut {
 
 .menuIcon {
     float: left;
-    width: 34px;
+    /* width: 34px; */
     height: 34px;
     background-color: #E60E2A;
     border-radius: 50%;
@@ -663,10 +664,21 @@ ons-icon.ng-scope.ons-icon.ons-icon--ion.ion-ios-arrow-back {
     width: 28px;
     background-size: contain;
     background-repeat: no-repeat;
-    background-image: url('backarrow.png');
+    background-image: url('backarrow-white.png');
 }
 
 ons-icon.ng-scope.ons-icon.ons-icon--ion.ion-ios-arrow-back:before {
+    content: "";
+}
+
+ons-icon.ng-scope.ons-icon.ons-icon--ion.ion-chevron-left {
+    width: 28px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url('backarrow.png');
+}
+
+ons-icon.ng-scope.ons-icon.ons-icon--ion.ion-chevron-left:before {
     content: "";
 }
 
@@ -989,4 +1001,55 @@ span.location {
 
 .ons-sliding-menu-inner {
     box-shadow: 20px 20px 100px rgba(0, 0, 0, 0.21) !important;
+}
+
+.greenSection {
+    background: #09ca8a;
+    color:#FFF;
+    text-align: center;
+}
+
+.greenSection  .avatar {
+    width: 84px;
+    height: 84px;
+}
+
+
+.iconsMenu {
+    width: 198px;
+    margin: auto;
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+.menuNotifations {
+    width: 46px;
+    height: 46px;
+    background: url(notifications_icon@3x.png);
+    background-size: 46px 46px;
+    background-repeat: no-repeat;
+    margin-left: 10px;
+    margin-right: 10px;
+    float:left;
+}
+
+.menuWallet {
+    width: 46px;
+    height: 46px;
+    background: url(wall_icons@3x.png);
+    background-size: 46px 46px;
+    background-repeat: no-repeat;
+    margin-left: 10px;
+    margin-right: 10px;
+    float:left;
+}
+
+.menuSettings {
+    width: 46px;
+    height: 46px;
+    background: url(settings_icon@3x.png);
+    background-size: 46px 46px;
+    background-repeat: no-repeat;
+    margin-left: 10px;
+    margin-right: 10px;
+    float:left;
 }

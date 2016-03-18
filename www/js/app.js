@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     var module = angular.module('app', ['onsen']);
-    var url = "http://daredot.dev.thickmug.com";
+    var url = "http://parkingcrowd.dev.thickmug.com";
     var currentApiKey;
 
 

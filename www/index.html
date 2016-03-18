@@ -59,7 +59,7 @@
     <ons-template id="register.html">
 
         <ons-page class="loginBg">
-            <ons-toolbar>
+            <ons-toolbar modifier="transparent">
                 <div class="left">
                     <ons-toolbar-button onclick="navi.popPage();">
                         <ons-icon icon="ion-chevron-left" fixed-width="false" style="font-size: 26px; vertical-align: -4px"></ons-icon>
@@ -78,9 +78,9 @@
     </ons-template>
 
 
-    <ons-template id="recovery.html">
+    <ons-template id="recovery.html" >
         <ons-page class="loginBg">
-            <ons-toolbar>
+            <ons-toolbar  modifier="transparent">
                 <div class="left">
                     <ons-toolbar-button onclick="navi.popPage();">
                         <ons-icon icon="ion-chevron-left" fixed-width="false" style="font-size: 26px; vertical-align: -4px"></ons-icon>
@@ -172,29 +172,36 @@
             <ons-toolbar modifier="transparent">
                 <div class="right">
                     <ons-toolbar-button class="menu-closeMenu" ng-click="menu.closeMenu()">
-                        </ons-icon>Close
+                        <img src="css/whiteclose.png" style="float:right; height:22px; width:22px; margin-top:10px; margin-right:20px;"/>
                     </ons-toolbar-button>
                 </div>
             </ons-toolbar>
+            <div class="greenSection">
+                <div class="avatar" style="background-image:url('http://daredot.dev.thickmug.com{{user.image_url}}');"></div>
+                <div class="name">Paweł Baszak</div>
+                <div class="portfelInfo">Środki w portfelu:  <strong>221zł</strong></div>
+                <div class="iconsMenu">
+                    <div class="menuNotifations"></div>
+                    <div class="menuWallet"></div>
+                    <div class="menuSettings"></div>
+                    <div class="clear"></div>
+                </div>
+            </div>
             <ons-list class="bottom-menu-list">
                 <ons-list-item class="bottom-menu-item" ng-click="openHome()">
                     <div class="menuIcon home"></div> Ekran główny
                 </ons-list-item>
 
                 <ons-list-item class="bottom-menu-item" ng-click="openYourQuests()">
-                    <div class="menuIcon yourQuests"></div> Twoje wyzwania
+                    <div class="menuIcon yourQuests"></div> Moje rezerwacje
                 </ons-list-item>
 
                 <ons-list-item class="bottom-menu-item" ng-click="openNewQuests()">
-                    <div class="menuIcon newQuest"></div> Nowe wyzwanie
+                    <div class="menuIcon newQuest"></div> Historia najmu
                 </ons-list-item>
 
                 <ons-list-item class="bottom-menu-item" ng-click="openStats()">
-                    <div class="menuIcon stats"></div> Statystyki
-                </ons-list-item>
-
-                <ons-list-item class="bottom-menu-item" ng-click="openSettings()">
-                    <div class="menuIcon settings"></div> Ustawienia
+                    <div class="menuIcon stats"></div> Ulubione
                 </ons-list-item>
             </ons-list>
             <a class="submitButton logOut" ng-click="logOut()">Wyloguj</a>
