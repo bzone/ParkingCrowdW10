@@ -8,6 +8,17 @@
     module.controller('AppController', function ($scope, $projekty, $filter) {
         $scope.currentPage = "Home";
 
+
+        $scope.isCheckedById = function (id) {
+            var checked = $("input[id=" + id + "]:checked").length;
+
+            if (checked == 0) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
         //NOTE: Logowanie uzytkownika
         $scope.loginUser = function () {
             var user_email = $("#loginEmail").val();
@@ -232,37 +243,39 @@
 
         //NOTE: Zapisywanie zmian w profilu użytkownika
         $scope.saveSettings = function () {
-            var passwordOK = false;
+            var passwordOK = true;
             var sendData = false;
-            if ($scope.user.newpassword || $scope.user.newpasswordr) {
-                if ($scope.user.newpassword == $scope.user.newpasswordr) {
-                    window.console && console.log('Nowe hasło gotowe do ustawienia');
-                    passwordOK = true;
-                } else {
-                    ons.notification.alert({
-                        message: 'Hasła się nie zgadzają'
-                    });
-                }
+
+            var settings = {
+                places: [
+                    {
+                        prop_guarded: $scope.isCheckedById('prop0')
+                    },
+                    {
+                        prop_monitored: $scope.isCheckedById('prop1')
+                    },
+                    {
+                        prop_bus: $scope.isCheckedById('prop2')
+                    },
+                    {
+                        prop_covered: $scope.isCheckedById('prop3')
+                    }
+                ]
             }
+
+
             if ($scope.user.new_avatar) {
-                window.console && console.log('Nowy awatar gotowy do ustawienia');
-                var newAvatar = {
-                    'sizeInBytes': $scope.user.new_avatar_size,
-                    'mimeType': 'image/png',
-                    'name': 'avatar',
-                    'data': $scope.user.new_avatar
-                }
-            }
-            if (passwordOK && $scope.user.newpassword && $scope.user.newpasswordr && $scope.user.new_avatar) {
                 sendData = true;
                 var dataToSend = {
                     first_name: $scope.user.first_name,
                     last_name: $scope.user.last_name,
                     username: $scope.user.username,
                     email: $scope.user.email,
+                    about: $scope.user.about,
+                    phone_number: $scope.user.phone_number,
                     facebook_id: $scope.user.facebook_id,
                     twitter_id: $scope.user.twitter_id,
-                    password: $scope.user.newpassword,
+                    settings: JSON.stringify(settings),
                     image: JSON.stringify({
                         'sizeInBytes': $scope.user.new_avatar_size,
                         'mimeType': 'image/png',
@@ -270,42 +283,18 @@
                         'data': $scope.user.new_avatar
                     })
                 }
-            } else if (passwordOK && $scope.user.newpassword && $scope.user.newpasswordr && !$scope.user.new_avatar) {
+            } else {
                 sendData = true;
                 var dataToSend = {
                     first_name: $scope.user.first_name,
                     last_name: $scope.user.last_name,
                     username: $scope.user.username,
                     email: $scope.user.email,
+                    about: $scope.user.about,
+                    phone_number: $scope.user.phone_number,
                     facebook_id: $scope.user.facebook_id,
                     twitter_id: $scope.user.twitter_id,
-                    password: $scope.user.newpassword
-                }
-            } else if (!$scope.user.newpassword && !$scope.user.newpasswordr && $scope.user.new_avatar) {
-                sendData = true;
-                var dataToSend = {
-                    first_name: $scope.user.first_name,
-                    last_name: $scope.user.last_name,
-                    username: $scope.user.username,
-                    email: $scope.user.email,
-                    facebook_id: $scope.user.facebook_id,
-                    twitter_id: $scope.user.twitter_id,
-                    image: JSON.stringify({
-                        'sizeInBytes': $scope.user.new_avatar_size,
-                        'mimeType': 'image/png',
-                        'name': 'avatar',
-                        'data': $scope.user.new_avatar
-                    })
-                }
-            } else if (!$scope.user.newpassword && !$scope.user.newpasswordr) {
-                sendData = true;
-                var dataToSend = {
-                    first_name: $scope.user.first_name,
-                    last_name: $scope.user.last_name,
-                    username: $scope.user.username,
-                    email: $scope.user.email,
-                    facebook_id: $scope.user.facebook_id,
-                    twitter_id: $scope.user.twitter_id
+                    settings: JSON.stringify(settings)
                 }
             }
 
@@ -327,6 +316,11 @@
                         if (respond.status == "success") {
                             window.console && console.log('Zaktualizowano dane użytkownika');
                             $("#spinner").fadeOut(1000);
+                            $scope.user.settings.places[0].prop_guarded = $scope.isCheckedById('prop0');
+                            $scope.user.settings.places[1].prop_monitored = $scope.isCheckedById('prop1');
+                            $scope.user.settings.places[2].prop_bus = $scope.isCheckedById('prop2');
+                            $scope.user.settings.places[3].prop_covered = $scope.isCheckedById('prop3');
+
                             ons.notification.alert({
                                 message: 'Twoje dane zostały zaktualizowane'
                             });
@@ -352,6 +346,7 @@
 
         //NOTE: Otwieranie notyfikacji
         $scope.openNotifications = function () {
+            menu.closeMenu();
             $scope.currentPage = 'Notifications';
             $.ajax({
                 type: "GET",
@@ -389,6 +384,240 @@
                     ons.notification.alert({
                         message: 'Podane dane są niepoprawne'
                     });
+                }
+            });
+        }
+
+
+        //NOTE: Otwieranie miejsca
+        $scope.showPlace = function (id) {
+            menu.closeMenu();
+            $scope.currentPage = 'Place';
+            $.ajax({
+                type: "GET",
+                url: url + '/api/v1/offers/places/' + id,
+                beforeSend: function () {
+                    $("#spinner").css('display', 'block');
+                },
+                data: {},
+                headers: {
+                    "api-key": currentApiKey
+                },
+                datatype: 'json',
+                cache: false,
+                success: function (respond) {
+                    window.console && console.log(respond);
+                    if (respond.status == "success") {
+                        window.console && console.log('Pobrano listę notyfikacji');
+                        $scope.currentPlace = angular.fromJson(respond.data);
+                        $scope.currentPlace.view = 'map';
+                        $scope.currentPlace.now = new Date();
+                        var d2 = new Date($scope.currentPlace.now);
+                        d2.setHours(d2.getHours() + 12);
+                        $scope.currentPlace.later = d2;
+                        naviDash.pushPage('place.html');
+                        $("#spinner").fadeOut(1000);
+
+                    } else if (respond.status == "error") {
+                        window.console && console.log('error ' + respond.data);
+                        $("#spinner").fadeOut(1000);
+                        ons.notification.alert({
+                            message: 'Błąd pobierania danych'
+                        });
+                    }
+                },
+                error: function (respond) {
+                    window.console && console.log('error ' + JSON.stringify(respond));
+                    $("#spinner").fadeOut(1000);
+                    ons.notification.alert({
+                        message: 'Podane dane są niepoprawne'
+                    });
+                }
+            });
+        }
+
+        $scope.showCar = function (id) {
+            menu.closeMenu();
+            $scope.currentPage = 'Car';
+            $.ajax({
+                type: "GET",
+                url: url + '/api/v1/offers/cars/' + id,
+                beforeSend: function () {
+                    $("#spinner").css('display', 'block');
+                },
+                data: {},
+                headers: {
+                    "api-key": currentApiKey
+                },
+                datatype: 'json',
+                cache: false,
+                success: function (respond) {
+                    window.console && console.log(respond);
+                    if (respond.status == "success") {
+                        window.console && console.log('Pobrano listę notyfikacji');
+                        $scope.currentPlace = angular.fromJson(respond.data);
+                        $scope.currentPlace.view = 'map';
+                        $scope.currentPlace.now = new Date();
+                        var d2 = new Date($scope.currentPlace.nows);
+                        d2.setHours(d2.getHours() + 12);
+                        $scope.currentPlace.later = d2;
+                        naviDash.pushPage('car.html');
+                        $("#spinner").fadeOut(1000);
+
+                    } else if (respond.status == "error") {
+                        window.console && console.log('error ' + respond.data);
+                        $("#spinner").fadeOut(1000);
+                        ons.notification.alert({
+                            message: 'Błąd pobierania danych'
+                        });
+                    }
+                },
+                error: function (respond) {
+                    window.console && console.log('error ' + JSON.stringify(respond));
+                    $("#spinner").fadeOut(1000);
+                    ons.notification.alert({
+                        message: 'Podane dane są niepoprawne'
+                    });
+                }
+            });
+        }
+
+        $scope.changeToPhotos = function () {
+            $scope.currentPlace.view = 'photos';
+        }
+
+        $scope.changeToMap = function () {
+            $scope.currentPlace.view = 'map';
+        }
+
+        $scope.addPlaceToFav = function (id) {
+            $.ajax({
+                type: "POST",
+                url: url + '/api/v1/user/favourites/create',
+                beforeSend: function () {
+                    $("#spinner").css('display', 'block');
+                },
+                data: {
+                    offer_place_id: id
+                },
+                headers: {
+                    "api-key": currentApiKey
+                },
+                datatype: 'json',
+                cache: false,
+                success: function (respond) {
+                    window.console && console.log(respond);
+                    $("#spinner").fadeOut(1000);
+                    if (respond.status == "success") {
+                        window.console && console.log('Zaktualizowano listę ulubionych');
+                        $scope.currentPlace.favourite = true;
+                        $scope.$apply();
+                    } else if (respond.status == "error") {
+                        window.console && console.log('error ' + respond.data);
+                    }
+                },
+                error: function (respond) {
+                    $("#spinner").fadeOut(1000);
+                    window.console && console.log('error ' + JSON.stringify(respond));
+                }
+            });
+        }
+
+        $scope.removePlaceFromFav = function (id) {
+            $.ajax({
+                type: "POST",
+                url: url + '/api/v1/user/favourites/destroy',
+                beforeSend: function () {
+                    $("#spinner").css('display', 'block');
+                },
+                data: {
+                    offer_place_id: id
+                },
+                headers: {
+                    "api-key": currentApiKey
+                },
+                datatype: 'json',
+                cache: false,
+                success: function (respond) {
+                    window.console && console.log(respond);
+                    $("#spinner").fadeOut(1000);
+                    if (respond.status == "success") {
+                        window.console && console.log('Zaktualizowano listę ulubionych');
+                        $scope.currentPlace.favourite = false;
+                        $scope.$apply();
+                    } else if (respond.status == "error") {
+                        window.console && console.log('error ' + respond.data);
+                    }
+                },
+                error: function (respond) {
+                    $("#spinner").fadeOut(1000);
+                    window.console && console.log('error ' + JSON.stringify(respond));
+                }
+            });
+        }
+
+        $scope.addCarToFav = function (id) {
+            $.ajax({
+                type: "POST",
+                url: url + '/api/v1/user/favourites/create',
+                beforeSend: function () {
+                    $("#spinner").css('display', 'block');
+                },
+                data: {
+                    offer_car_id: id
+                },
+                headers: {
+                    "api-key": currentApiKey
+                },
+                datatype: 'json',
+                cache: false,
+                success: function (respond) {
+                    window.console && console.log(respond);
+                    $("#spinner").fadeOut(1000);
+                    if (respond.status == "success") {
+                        window.console && console.log('Zaktualizowano listę ulubionych');
+                        $scope.currentPlace.favourite = true;
+                        $scope.$apply();
+                    } else if (respond.status == "error") {
+                        window.console && console.log('error ' + respond.data);
+                    }
+                },
+                error: function (respond) {
+                    $("#spinner").fadeOut(1000);
+                    window.console && console.log('error ' + JSON.stringify(respond));
+                }
+            });
+        }
+
+        $scope.removeCarFromFav = function (id) {
+            $.ajax({
+                type: "POST",
+                url: url + '/api/v1/user/favourites/destroy',
+                beforeSend: function () {
+                    $("#spinner").css('display', 'block');
+                },
+                data: {
+                    offer_car_id: id
+                },
+                headers: {
+                    "api-key": currentApiKey
+                },
+                datatype: 'json',
+                cache: false,
+                success: function (respond) {
+                    window.console && console.log(respond);
+                    $("#spinner").fadeOut(1000);
+                    if (respond.status == "success") {
+                        window.console && console.log('Zaktualizowano listę ulubionych');
+                        $scope.currentPlace.favourite = false;
+                        $scope.$apply();
+                    } else if (respond.status == "error") {
+                        window.console && console.log('error ' + respond.data);
+                    }
+                },
+                error: function (respond) {
+                    $("#spinner").fadeOut(1000);
+                    window.console && console.log('error ' + JSON.stringify(respond));
                 }
             });
         }
@@ -442,158 +671,178 @@
         }
 
 
-        //NOTE: Otwieranie ekranu statystyk
-        $scope.openStats = function () {
+        //NOTE: Otwieranie ekranu ulubionych
+        $scope.openFavs = function () {
             menu.closeMenu();
-            if ($scope.currentPage != 'Stats') {
-                $scope.currentPage = 'Stats';
-                naviDash.replacePage('stats.html');
+            if ($scope.currentPage != 'Favs') {
+                $scope.currentPage = 'Favs';
+
+                $.ajax({
+                    type: "GET",
+                    url: url + '/api/v1/user/favourites',
+                    beforeSend: function () {
+                        $("#spinner").css('display', 'block');
+                    },
+                    data: {
+                        type: 0
+                    },
+                    headers: {
+                        "api-key": currentApiKey
+                    },
+                    datatype: 'json',
+                    cache: false,
+                    success: function (respond) {
+                        window.console && console.log(respond);
+                        if (respond.status == "success") {
+                            window.console && console.log('Pobrano liste ulubionych');
+                            $scope.favsList = angular.fromJson(respond.data);
+                            $scope.favView = 'parking';
+                            $scope.$apply();
+                            naviDash.replacePage('favs.html');
+                            $("#spinner").fadeOut(1000);
+
+                        } else if (respond.status == "error") {
+                            window.console && console.log('error ' + respond.data);
+                            $("#spinner").fadeOut(1000);
+                            ons.notification.alert({
+                                message: 'Błąd pobierania danych'
+                            });
+                        }
+                    },
+                    error: function (respond) {
+                        window.console && console.log('error ' + JSON.stringify(respond));
+                        $("#spinner").fadeOut(1000);
+                        ons.notification.alert({
+                            message: 'Podane dane są niepoprawne'
+                        });
+                    }
+                });
+
+
             }
         }
 
-        //NOTE: Otwieranie ekranu dodawania zadania
-        $scope.openNewQuests = function () {
+        $scope.changeToParking = function () {
+            $scope.favView = 'parking';
+        }
+
+        $scope.changeToCars = function () {
+            $scope.favView = 'cars';
+        }
+
+        //NOTE: Otwieranie ekranu portfela
+        $scope.openWallet = function () {
             menu.closeMenu();
-            if ($scope.currentPage != 'NewQuests') {
-                $scope.currentPage = 'NewQuests';
-                naviDash.replacePage('addquest.html');
+            if ($scope.currentPage != 'Wallet') {
+                $scope.currentPage = 'Wallet';
+
+                $.ajax({
+                    type: "GET",
+                    url: url + '/api/v1/user/balance',
+                    beforeSend: function () {
+                        $("#spinner").css('display', 'block');
+                    },
+                    data: {
+                        limit: 1000
+                    },
+                    headers: {
+                        "api-key": currentApiKey
+                    },
+                    datatype: 'json',
+                    cache: false,
+                    success: function (respond) {
+                        window.console && console.log(respond);
+                        if (respond.status == "success") {
+                            window.console && console.log('Pobrano ststystyki portfela');
+                            $scope.walletList = angular.fromJson(respond.data);
+                            $scope.walletView = 'summary';
+                            $scope.$apply();
+                            naviDash.replacePage('wallet.html');
+                            $("#spinner").fadeOut(1000);
+
+                        } else if (respond.status == "error") {
+                            window.console && console.log('error ' + respond.data);
+                            $("#spinner").fadeOut(1000);
+                            ons.notification.alert({
+                                message: 'Błąd pobierania danych'
+                            });
+                        }
+                    },
+                    error: function (respond) {
+                        window.console && console.log('error ' + JSON.stringify(respond));
+                        $("#spinner").fadeOut(1000);
+                        ons.notification.alert({
+                            message: 'Podane dane są niepoprawne'
+                        });
+                    }
+                });
+
+
             }
         }
 
-        //NOTE: Wyswietlanie wybranej kategorii
-        $scope.getCategory = function (cat, name) {
-            $scope.categoryName = name;
-            $.ajax({
-                type: "GET",
-                url: url + '/api/v1/challenge/search',
-                beforeSend: function () {
-                    $("#spinner").css('display', 'block');
-                },
-                data: {
-                    category_id: cat
-                },
-                headers: {
-                    "api-key": currentApiKey
-                },
-                datatype: 'json',
-                cache: false,
-                success: function (respond) {
-                    window.console && console.log(respond);
-                    if (respond.status == "success") {
-                        window.console && console.log('Pobrano zadania z kategorii ' + cat);
-                        $scope.tasksInCategory = angular.fromJson(respond.data);
-                        naviDash.pushPage('category.html');
-                        $("#spinner").fadeOut(1000);
+        $scope.changeToSummary = function () {
+            $scope.walletView = 'summary';
+        }
 
-                    } else if (respond.status == "error") {
-                        window.console && console.log('error ' + respond.data);
+        $scope.changeToHistory = function () {
+            $scope.walletView = 'history';
+        }
+
+
+
+        //NOTE: Otwieranie ekranu historii najmu
+        $scope.openHistory = function () {
+            menu.closeMenu();
+            if ($scope.currentPage != 'History') {
+                $scope.currentPage = 'History';
+
+                $.ajax({
+                    type: "GET",
+                    url: url + '/api/v1/user/reservations',
+                    beforeSend: function () {
+                        $("#spinner").css('display', 'block');
+                    },
+                    data: {
+                        limit: 1000,
+                        canceled: 1
+                    },
+                    headers: {
+                        "api-key": currentApiKey
+                    },
+                    datatype: 'json',
+                    cache: false,
+                    success: function (respond) {
+                        window.console && console.log(respond);
+                        if (respond.status == "success") {
+                            window.console && console.log('Pobrano historie najmu');
+                            $scope.historyList = angular.fromJson(respond.data);
+                            $scope.$apply();
+                            naviDash.replacePage('history.html');
+                            $("#spinner").fadeOut(1000);
+
+                        } else if (respond.status == "error") {
+                            window.console && console.log('error ' + respond.data);
+                            $("#spinner").fadeOut(1000);
+                            ons.notification.alert({
+                                message: 'Błąd pobierania danych'
+                            });
+                        }
+                    },
+                    error: function (respond) {
+                        window.console && console.log('error ' + JSON.stringify(respond));
                         $("#spinner").fadeOut(1000);
                         ons.notification.alert({
-                            message: 'Błąd pobierania danych'
+                            message: 'Podane dane są niepoprawne'
                         });
                     }
-                },
-                error: function (respond) {
-                    window.console && console.log('error ' + JSON.stringify(respond));
-                    $("#spinner").fadeOut(1000);
-                    ons.notification.alert({
-                        message: 'Podane dane są niepoprawne'
-                    });
-                }
-            });
+                });
+
+
+            }
         }
 
-        //NOTE: Otwieranie detali zestawu
-        $scope.questDetails = function (id) {
-            window.console && console.log('Pobieram detale zestawu: ' + id);
-            $.ajax({
-                type: "GET",
-                url: url + '/api/v1/challenge/read/' + id,
-                beforeSend: function () {
-                    $("#spinner").css('display', 'block');
-                },
-                headers: {
-                    "api-key": currentApiKey
-                },
-                datatype: 'json',
-                cache: false,
-                success: function (respond) {
-                    window.console && console.log(respond);
-                    if (respond.status == "success") {
-                        window.console && console.log('Pobrano detale zestawu ' + id);
-                        $scope.questDetailsData = angular.fromJson(respond.data);
 
-                        if ($scope.questDetailsData.teams_stats) {
-                            angular.forEach($scope.questDetailsData.teams_stats.tasks, function (task, key) {
-                                window.console && console.log(task.name + " : " + key);
-                                window.console && console.log($scope.questDetailsData.tasks[key].name);
-                                task.id = $scope.questDetailsData.tasks[key].id;
-                                task.type = $scope.questDetailsData.tasks[key].type.id;
-                                task.difficulty = $scope.questDetailsData.tasks[key].difficulty;
-                            }, true);
-                        }
-
-                        $scope.detailsMyPoints = 0;
-                        $scope.detailsWhiteTeam = 0;
-                        $scope.detailsBlackTeam = 0;
-
-                        angular.forEach($scope.questDetailsData.tasks, function (task, key) {
-                            if (task.verified != 0) {
-                                $scope.detailsMyPoints++;
-                            }
-                        }, true);
-
-                        angular.forEach($scope.questDetailsData.users, function (user, key) {
-                            if (user.team == "white") {
-                                $scope.detailsWhiteTeam++;
-                            }
-                            if (user.team == "black") {
-                                $scope.detailsBlackTeam++;
-                            }
-                        }, true);
-
-
-                        $scope.detailsMyLocation = 0;
-                        var found = $filter('filter')($scope.questDetailsData.users, {
-                            id: $scope.user.id
-                        }, true);
-                        if (found.length > 0) {
-                            $scope.detailsMyLocation = found[0].location;
-                        }
-
-
-                        naviDash.pushPage('questdetails.html');
-                        $("#spinner").fadeOut(1000);
-
-                    } else if (respond.status == "error") {
-                        window.console && console.log('error ' + respond.data);
-                        $("#spinner").fadeOut(1000);
-                        ons.notification.alert({
-                            message: 'Bład pobierania danych'
-                        });
-                    }
-                },
-                error: function (respond) {
-                    window.console && console.log('error ' + JSON.stringify(respond));
-                    $("#spinner").fadeOut(1000);
-                    ons.notification.alert({
-                        message: 'Podane dane są niepoprawne'
-                    });
-                }
-            });
-        }
-
-        //NOTE: Otwieranie listy graczy
-        $scope.playersList = function (id) {
-            $scope.currentPage = "PlayerList";
-            naviDash.pushPage('playerslist.html');
-        }
-
-        //NOTE: Otwieranie rankingu graczy
-        $scope.playersRanking = function (id) {
-            $scope.currentPage = "RankingList";
-            naviDash.pushPage('playerranking.html');
-        }
 
         //NOTE: Sprawdzanie czy użytkownik jest przypisany do zestawu 
         $scope.userIn = function () {
@@ -608,180 +857,22 @@
             }
         }
 
-        //NOTE: Sprawdzanie czy zadanie jest aktywne
-        $scope.questActive = function () {
-            var dataZadania = $scope.questDetailsData.finish_date;
-            dataZadania = new Date(dataZadania);
-            var now = new Date();
-            if (now.getTime() >= dataZadania.getTime()) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-        //NOTE: Dołącz do zadania
-        $scope.joinQuest = function (quest, team) {
-            if (team == "none") {
-                var dataToSend = {
-                    challenge_id: quest,
-                    user_ids: '[' + $scope.user.id + ']'
-                }
-            } else {
-                var dataToSend = {
-                    challenge_id: quest,
-                    user_ids: '[' + $scope.user.id + ']',
-                    team: team
-                }
-            }
-            $.ajax({
-                type: "POST",
-                url: url + '/api/v1/challenge/assign-users',
-                beforeSend: function () {
-                    $("#spinner").css('display', 'block');
-                },
-                headers: {
-                    "api-key": currentApiKey
-                },
-                data: dataToSend,
-                datatype: 'json',
-                cache: false,
-                success: function (respond) {
-                    window.console && console.log(respond);
-                    if (respond.status == "success") {
-                        window.console && console.log('Przypisano do zestawu');
-                        $scope.openYourQuests();
-                        $("#spinner").fadeOut(1000);
-
-                    } else if (respond.status == "error") {
-                        window.console && console.log('error ' + respond.data);
-                        $("#spinner").fadeOut(1000);
-                        ons.notification.alert({
-                            message: 'Bład pobierania danych'
-                        });
-                    }
-                },
-                error: function (respond) {
-                    window.console && console.log('error ' + JSON.stringify(respond));
-                    $("#spinner").fadeOut(1000);
-                    ons.notification.alert({
-                        message: 'Podane dane są niepoprawne'
-                    });
-                }
-            });
-        }
-
-        //NOTE: Detale zadania
-        $scope.taskDetails = function (id) {
-            window.console && console.log('Pobieranie detale zdania ' + id);
-            $.ajax({
-                type: "GET",
-                url: url + '/api/v1/user/challenge/tasks',
-                beforeSend: function () {
-                    $("#spinner").css('display', 'block');
-                },
-                headers: {
-                    "api-key": currentApiKey
-                },
-                data: {
-                    task_id: id
-                },
-                datatype: 'json',
-                cache: false,
-                success: function (respond) {
-                    window.console && console.log(respond);
-                    if (respond.status == "success") {
-                        $("#spinner").fadeOut(1000);
-                        $scope.taskDetailsData = angular.fromJson(respond.message);
-                        $scope.taskDetailsData.readyToVerify = 0;
-                        $scope.taskDetailsData.params = angular.fromJson($scope.taskDetailsData.task.lparams);
-                        if ($scope.taskDetailsData.progress) {
-                            $scope.taskDetailsData.progressParams = angular.fromJson($scope.taskDetailsData.progress.lparams);
-                        }
-
-                        // checklista
-                        if ($scope.taskDetailsData.task.type.id == 8) {
-                            $scope.taskDetailsData.display = [];
-
-                            if (!$scope.taskDetailsData.progressParams) {
-                                angular.forEach($scope.taskDetailsData.params.checklist, function (point, key) {
-                                    var listpoint = {
-                                        checklist: point,
-                                        status: 0
-                                    }
-                                    $scope.taskDetailsData.display.push(listpoint);
-
-                                }, true);
-                            } else {
-                                var finished = 0;
-                                angular.forEach($scope.taskDetailsData.params.checklist, function (point, key) {
-                                    var listpoint = {
-                                        checklist: point,
-                                        status: $scope.taskDetailsData.progressParams.status[key]
-                                    }
-                                    if ($scope.taskDetailsData.progressParams.status[key] == 1) {
-                                        finished++;
-                                    }
-                                    $scope.taskDetailsData.display.push(listpoint);
-
-                                }, true);
-                                if ($scope.taskDetailsData.params.checklist.length == finished) {
-                                    $scope.taskDetailsData.readyToVerify = 1;
-                                }
-                            }
-                        }
-
-                        // dystans
-                        if ($scope.taskDetailsData.task.type.id == 6) {
-                            $scope.taskDetailsData.display = [];
-
-                            if ($scope.taskDetailsData.progressParams) {
-                                $scope.taskDetailsData.display.distance = $scope.taskDetailsData.progressParams.distance;
-                                $scope.taskDetailsData.display.tracked = $scope.taskDetailsData.progressParams.tracked;
-                                if ($scope.taskDetailsData.display.tracked >= $scope.taskDetailsData.display.distance) {
-                                    $scope.taskDetailsData.readyToVerify = 1;
-                                }
-                            } else {
-                                $scope.taskDetailsData.display.distance = $scope.taskDetailsData.params.distance;
-                                $scope.taskDetailsData.display.tracked = 0;
-                            }
-                        }
-
-                        if ($scope.taskDetailsData.progress) {
-                            if ($scope.taskDetailsData.progress.waiting_for_verification == 1 || $scope.taskDetailsData.progress.verified == 1) {
-                                $scope.taskDetailsData.readyToVerify = 0;
-                            }
-                        }
-
-                        window.console && console.log('Pobrane detale zdania');
-                        naviDash.pushPage('taskdetails.html');
-                    } else if (respond.status == "error") {
-                        $("#spinner").fadeOut(1000);
-                        window.console && console.log('error ' + respond.data);
-                    }
-                },
-                error: function (respond) {
-                    $("#spinner").fadeOut(1000);
-                    window.console && console.log('error ' + JSON.stringify(respond));
-                }
-            });
-        }
 
         //NOTE: Otwieranie twoich zadan 
-        $scope.openYourQuests = function () {
+        $scope.openReservations = function () {
             menu.closeMenu();
             window.console && console.log($scope.currentPage);
-            if ($scope.currentPage != 'YourQuests') {
-                $scope.currentPage = 'YourQuests';
+            if ($scope.currentPage != 'rezerwacje') {
+                $scope.currentPage = 'rezerwacje';
                 $.ajax({
                     type: "GET",
-                    url: url + '/api/v1/user/challenges',
+                    url: url + '/api/v1/user/reservations',
                     beforeSend: function () {
                         $("#spinner").css('display', 'block');
                     },
                     data: {
-                        finished: 0,
                         limit: 1000,
+                        canceled: 1
                     },
                     headers: {
                         "api-key": currentApiKey
@@ -789,37 +880,21 @@
                     datatype: 'json',
                     cache: false,
                     success: function (respond) {
-                        $scope.activeTasks = angular.fromJson(respond.data);
                         window.console && console.log(respond);
-                        $.ajax({
-                            type: "GET",
-                            url: url + '/api/v1/user/challenges',
-                            beforeSend: function () {
-                                $("#spinner").css('display', 'block');
-                            },
-                            data: {
-                                finished: 1,
-                                limit: 1000,
-                            },
-                            headers: {
-                                "api-key": currentApiKey
-                            },
-                            datatype: 'json',
-                            cache: false,
-                            success: function (respond) {
-                                $scope.doneTasks = angular.fromJson(respond.data);
-                                $("#spinner").fadeOut(1000);
-                                window.console && console.log(respond);
-                                naviDash.pushPage('yourquests.html');
-                            },
-                            error: function (respond) {
-                                window.console && console.log('error ' + JSON.stringify(respond));
-                                $("#spinner").fadeOut(1000);
-                                ons.notification.alert({
-                                    message: 'Podane dane są niepoprawne'
-                                });
-                            }
-                        });
+                        if (respond.status == "success") {
+                            window.console && console.log('Pobrano rezerwacje');
+                            $scope.reservationsList = angular.fromJson(respond.data);
+                            $scope.$apply();
+                            naviDash.replacePage('reservations.html');
+                            $("#spinner").fadeOut(1000);
+
+                        } else if (respond.status == "error") {
+                            window.console && console.log('error ' + respond.data);
+                            $("#spinner").fadeOut(1000);
+                            ons.notification.alert({
+                                message: 'Błąd pobierania danych'
+                            });
+                        }
                     },
                     error: function (respond) {
                         window.console && console.log('error ' + JSON.stringify(respond));
@@ -829,229 +904,18 @@
                         });
                     }
                 });
+
             }
         }
 
 
-        //NOTE: Otwieranie porównanie graczy
-        $scope.comparePlayers = function (challenge_id, user_id) {
-            var found = $filter('filter')($scope.questDetailsData.users, {
-                id: user_id
-            }, true);
-            window.console && console.log(found[0]);
-            $scope.compereWith = found[0];
-            $scope.currentPage = 'Compare';
-            $.ajax({
-                type: "GET",
-                url: url + '/api/v1/user/challenges/compare',
-                beforeSend: function () {
-                    $("#spinner").css('display', 'block');
-                },
-                data: {
-                    challenge_id: challenge_id,
-                    user_id: user_id,
-                },
-                headers: {
-                    "api-key": currentApiKey
-                },
-                datatype: 'json',
-                cache: false,
-                success: function (respond) {
-                    $("#spinner").fadeOut(1000);
-                    $scope.compare = angular.fromJson(respond.message);
-                    window.console && console.log(respond);
+        $scope.showReservationDetails = function (element) {
+            $scope.detailsView = element;
+            naviDash.pushPage('reservationdetails.html');
 
-                    $.ajax({
-                        type: "GET",
-                        url: url + '/api/v1/user/challenges/compare',
-                        beforeSend: function () {
-                            $("#spinner").css('display', 'block');
-                        },
-                        data: {
-                            challenge_id: challenge_id,
-                            user_id: $scope.user.id,
-                        },
-                        headers: {
-                            "api-key": currentApiKey
-                        },
-                        datatype: 'json',
-                        cache: false,
-                        success: function (respond) {
-                            $("#spinner").fadeOut(1000);
-                            $scope.compareMyPoints = angular.fromJson(respond.message);
-                            window.console && console.log(respond);
-
-                            var myPoints = 0;
-                            var otherPoints = 0;
-                            angular.forEach($scope.compare, function (task, key) {
-                                task.verifiedMy = $scope.compareMyPoints[key].verified;
-                                if (task.verifiedMy != 0) {
-                                    myPoints++;
-                                }
-                                if (task.verified != 0) {
-                                    otherPoints++;
-                                }
-                            }, true);
-                            $scope.myPoints = myPoints;
-                            $scope.otherPoints = otherPoints;
-
-                            naviDash.pushPage('compare.html');
-                        },
-                        error: function (respond) {
-                            window.console && console.log('error ' + JSON.stringify(respond));
-                            $("#spinner").fadeOut(1000);
-                            ons.notification.alert({
-                                message: 'Podane dane są niepoprawne'
-                            });
-                        }
-                    });
-
-                },
-                error: function (respond) {
-                    window.console && console.log('error ' + JSON.stringify(respond));
-                    $("#spinner").fadeOut(1000);
-                    ons.notification.alert({
-                        message: 'Podane dane są niepoprawne'
-                    });
-                }
-            });
-        }
-
-        //NOTE: Otwieranie zakładki zadania aktywne {
-        $scope.showActiveTasks = function () {
-            $('#activeTasks').css('display', 'block');
-            $('#doneTasks').css('display', 'none');
-        }
-
-        //NOTE: Otwieranie zakładki zadania ukończone {
-        $scope.showDoneTasks = function () {
-            $('#activeTasks').css('display', 'none');
-            $('#doneTasks').css('display', 'block');
         }
 
 
-        //NOTE: Przesyłanie zadania do weryfikacji
-        $scope.taskVerify = function (taskid, type) {
-
-            if (type == 8) {
-                var checklist = $scope.taskDetailsData.params.checklist;
-
-                var status = [1];
-
-                var i = 0;
-                for (i = 1; i < $scope.taskDetailsData.params.checklist.length; i++) {
-                    status.push(1);
-                }
-                window.console && console.log(status);
-
-                var dataToSend = {
-                    checklist: checklist,
-                    status: status
-                }
-            }
-
-            dataToSend = JSON.stringify(dataToSend);
-
-            $.ajax({
-                type: "POST",
-                url: url + '/api/v1/user/challenges/task/update',
-                beforeSend: function () {
-                    $("#spinner").css('display', 'block');
-                },
-                data: {
-                    task_id: taskid,
-                    lparams: dataToSend,
-                },
-                headers: {
-                    "api-key": currentApiKey
-                },
-                datatype: 'json',
-                cache: false,
-                success: function (respond) {
-                    window.console && console.log(respond);
-
-                    $.ajax({
-                        type: "POST",
-                        url: url + '/api/v1/user/challenges/task/send-to-verification',
-                        beforeSend: function () {
-                            $("#spinner").css('display', 'block');
-                        },
-                        data: {
-                            task_id: taskid
-                        },
-                        headers: {
-                            "api-key": currentApiKey
-                        },
-                        datatype: 'json',
-                        cache: false,
-                        success: function (respond) {
-                            $("#spinner").fadeOut(1000);
-                            window.console && console.log(respond);
-                            naviDash.popPage();
-                        },
-                        error: function (respond) {
-                            window.console && console.log('error ' + JSON.stringify(respond));
-                            $("#spinner").fadeOut(1000);
-                            ons.notification.alert({
-                                message: 'Podane dane są niepoprawne'
-                            });
-                        }
-                    });
-
-                },
-                error: function (respond) {
-                    window.console && console.log('error ' + JSON.stringify(respond));
-                    $("#spinner").fadeOut(1000);
-                    ons.notification.alert({
-                        message: 'Podane dane są niepoprawne'
-                    });
-                }
-            });
-        }
-
-        $scope.toogleCheck = function (index) {
-            if ($scope.taskDetailsData.progress) {
-                if ($scope.taskDetailsData.progress.waiting_for_verification == 0) {
-                    var tmp = $scope.taskDetailsData.display[index].status;
-                    if (tmp == 1) {
-                        $scope.taskDetailsData.display[index].status = 0;
-                    } else {
-                        $scope.taskDetailsData.display[index].status = 1;
-                    }
-
-                    var finished = 0;
-                    angular.forEach($scope.taskDetailsData.params.checklist, function (point, key) {
-                        if ($scope.taskDetailsData.display[key].status == 1) {
-                            finished++;
-                        }
-                    }, true);
-                    if ($scope.taskDetailsData.params.checklist.length == finished) {
-                        $scope.taskDetailsData.readyToVerify = 1;
-                    } else {
-                        $scope.taskDetailsData.readyToVerify = 0;
-                    }
-                }
-            } else {
-                var tmp = $scope.taskDetailsData.display[index].status;
-                if (tmp == 1) {
-                    $scope.taskDetailsData.display[index].status = 0;
-                } else {
-                    $scope.taskDetailsData.display[index].status = 1;
-                }
-
-                var finished = 0;
-                angular.forEach($scope.taskDetailsData.params.checklist, function (point, key) {
-                    if ($scope.taskDetailsData.display[key].status == 1) {
-                        finished++;
-                    }
-                }, true);
-                if ($scope.taskDetailsData.params.checklist.length == finished) {
-                    $scope.taskDetailsData.readyToVerify = 1;
-                } else {
-                    $scope.taskDetailsData.readyToVerify = 0;
-                }
-            }
-        }
 
         $scope.distanceStart = function () {
             $scope.taskDetailsData.display.active = 1;

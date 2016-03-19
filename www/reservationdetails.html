@@ -1,0 +1,81 @@
+<ons-page>
+    <ons-toolbar style="background-color: #02458D;" ng-if="detailsView.paid==0&&detailsView.canceled==0">
+        <div class="left">
+            <ons-toolbar-button ng-click="naviDash.popPage()">
+                <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">szczegóły</div>
+    </ons-toolbar>
+    <ons-toolbar ng-if="detailsView.paid==1||detailsView.canceled==1">
+        <div class="left">
+            <ons-toolbar-button ng-click="naviDash.popPage()">
+                <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">szczegóły</div>
+    </ons-toolbar>
+
+    <div>
+
+
+        <div class="colorHeader" ng-if="detailsView.paid==1||detailsView.canceled==1">
+            <span ng-if="detailsView.offer_car">{{detailsView.offer_car.brand}} {{detailsView.offer_car.model}}</span>
+            <span ng-if="detailsView.offer_place">{{detailsView.offer_place.name}}</span>
+            <br/>
+            <strong> {{detailsView.start_date | date: 'dd.MM.yyyy HH:mm'}} - {{detailsView.end_date | date: 'dd.MM.yyyy HH:mm'}}</strong>
+            <br/> całkowity koszt wynajmu: {{detailsView.price | number:2}}zł
+            <br/>
+            <br/>
+        </div>
+        <div class="colorHeader blueHeader" ng-if="detailsView.paid==0&&detailsView.canceled==0">
+            <span ng-if="detailsView.offer_car">{{detailsView.offer_car.brand}} {{detailsView.offer_car.model}}</span>
+            <span ng-if="detailsView.offer_place">{{detailsView.offer_place.name}}</span>
+            <br/>
+            <strong> {{detailsView.start_date | date: 'dd.MM.yyyy HH:mm'}} - {{detailsView.end_date | date: 'dd.MM.yyyy HH:mm'}}</strong>
+            <br/> całkowity koszt wynajmu: {{detailsView.price | number:2}}zł
+            <br/>
+            <br/>
+
+            <a class="submitButton white" ng-click="cancleReservation()">Anuluj rezerwację</a>
+        </div>
+
+
+
+        <div ng-if="detailsView.offer_car">
+            <img src="http://maps.googleapis.com/maps/api/staticmap?center={{detailsView.offer_car.latitude}},{{detailsView.offer_car.longitude}}&zoom=15&scale=2&size=375x200&maptype=roadmap&key=AIzaSyAtxSIxBFohxnPNp2BYs9ysrHY_cKJxblA&format=png&visual_refresh=true&markers=icon:http://dl.dropboxusercontent.com/u/28981503/mappoint.png%7Cshadow:false%7C{{detailsView.offer_car.latitude}},{{detailsView.offer_car.longitude}}" class="img-responsive" />
+
+            <div class="adresModule">
+                <strong>Adres odbioru pojazdu:</strong>
+                <div class="clear"></div>
+                {{detailsView.offer_car.address_street}}
+                <br/> {{detailsView.offer_car.address_postcode}} {{detailsView.offer_car.address_city}}
+            </div>
+            <div class="kontaktModule borderTopBlack">
+                <div class="avatar" style="background-image:url('http://parkingcrowd.dev.thickmug.com{{detailsView.offer_car.user.image_url}}');"></div>
+                <a class="phoneIcon"></a>
+                <strong>{{detailsView.offer_car.user.first_name}} {{detailsView.offer_car.user.last_name}}</strong>
+                <br> {{detailsView.offer_car.user.phone_number}}
+            </div>
+        </div>
+
+        <div ng-if="detailsView.offer_place">
+            <img src="http://maps.googleapis.com/maps/api/staticmap?center={{detailsView.offer_place.latitude}},{{detailsView.offer_place.longitude}}&zoom=15&scale=2&size=375x200&maptype=roadmap&key=AIzaSyAtxSIxBFohxnPNp2BYs9ysrHY_cKJxblA&format=png&visual_refresh=true&markers=icon:http://dl.dropboxusercontent.com/u/28981503/mappoint.png%7Cshadow:false%7C{{detailsView.offer_place.latitude}},{{detailsView.offer_place.longitude}}" class="img-responsive" />
+
+            <div class="adresModule">
+                <strong>Adres parkingu:</strong>
+                <div class="clear"></div>
+                {{detailsView.offer_place.address_street}}
+                <br/> {{detailsView.offer_place.address_postcode}} {{detailsView.offer_place.address_city}}
+            </div>
+            <div class="kontaktModule borderTopBlack">
+                <div class="avatar" style="background-image:url('http://parkingcrowd.dev.thickmug.com{{detailsView.offer_place.user.image_url}}');"></div>
+                <a class="phoneIcon"></a>
+                <strong>{{detailsView.offer_place.user.first_name}} {{detailsView.offer_place.user.last_name}}</strong>
+                <br> {{detailsView.offer_place.user.phone_number}}
+            </div>
+        </div>
+
+
+    </div>
+</ons-page>

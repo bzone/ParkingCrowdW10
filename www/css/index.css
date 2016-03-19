@@ -966,8 +966,8 @@ span.location {
 
 
 /* Dystans */
-  z poxo xjxuj/..jy 
-.numberDistance {
+
+z poxo xjxuj/..jy .numberDistance {
     width: 100%;
     text-align: center;
     font-size: 50px;
@@ -1005,15 +1005,14 @@ span.location {
 
 .greenSection {
     background: #09ca8a;
-    color:#FFF;
+    color: #FFF;
     text-align: center;
 }
 
-.greenSection  .avatar {
+.greenSection .avatar {
     width: 84px;
     height: 84px;
 }
-
 
 .iconsMenu {
     width: 198px;
@@ -1021,6 +1020,7 @@ span.location {
     margin-top: 20px;
     padding-bottom: 20px;
 }
+
 .menuNotifations {
     width: 46px;
     height: 46px;
@@ -1029,7 +1029,7 @@ span.location {
     background-repeat: no-repeat;
     margin-left: 10px;
     margin-right: 10px;
-    float:left;
+    float: left;
 }
 
 .menuWallet {
@@ -1040,7 +1040,7 @@ span.location {
     background-repeat: no-repeat;
     margin-left: 10px;
     margin-right: 10px;
-    float:left;
+    float: left;
 }
 
 .menuSettings {
@@ -1051,5 +1051,391 @@ span.location {
     background-repeat: no-repeat;
     margin-left: 10px;
     margin-right: 10px;
-    float:left;
+    float: left;
+}
+
+.inputLabel {
+    width: 40%;
+    float: left;
+}
+
+.inputHolder {
+    width: 60%;
+    float: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.list-check {
+    margin-top: 0px;
+    float: right;
+}
+
+.img-responsive {
+    width: 100%;
+    height: auto;
+}
+
+ons-carousel {
+    margin-bottom: 4px;
+}
+
+.buttonHolder {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
+.blackLine {
+    width: 100%;
+    height: 1px;
+    background-color: #000;
+}
+
+.starFull {
+    width: 17px;
+    height: 15px;
+    margin-right: 5px;
+    float: left;
+    background-image: url(star_small_icon_full@3x.png);
+    background-size: 17px 15px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.starEmpty {
+    width: 17px;
+    height: 15px;
+    margin-right: 5px;
+    float: left;
+    background-image: url(star_small_icon_empty@3x.png);
+    background-size: 17px 15px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.adresModule {
+    padding: 10px;
+    padding-bottom: 30px;
+    padding-top: 20px;
+}
+
+.adresModule strong {
+    font-size: 20px;
+}
+
+.wynajmujacyModule {
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    padding-left: 95px;
+    position: relative;
+}
+
+.wynajmujacyModule .avatar {
+    width: 69px;
+    height: 69px;
+    position: absolute;
+    left: 10px;
+}
+
+.kontaktModule {
+    padding: 10px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-left: 95px;
+    position: relative;
+    padding-right: 70px;
+}
+
+.kontaktModule .avatar {
+    width: 69px;
+    height: 69px;
+    position: absolute;
+    left: 10px;
+    top: 15px;
+}
+
+.kontaktModule .phoneIcon {
+    width: 49px;
+    height: 49px;
+    position: absolute;
+    right: 10px;
+    top: 26px;
+    background: url(phone_icon@3x.png);
+    background-size: 49px 49px;
+}
+
+span.green {
+    color: #09CA8A;
+}
+
+.alertModule {
+    padding: 10px;
+    position: relative;
+    color: #FF628A;
+    padding-left: 45px;
+    padding-bottom: 30px;
+    padding-top: 20px;
+}
+
+.alertModule:after {
+    content: "";
+    position: absolute;
+    background-image: url(alert.png);
+    background-size: 25px 24px;
+    width: 25px;
+    height: 24px;
+    left: 10px;
+    top: 18px;
+}
+
+.noBorderBottom {
+    border-bottom: 0px !important;
+}
+
+.noBorderTop {
+    border-top: 0px !important;
+}
+
+.borderTopBlack {
+    border-top: solid 1px #000 !important;
+}
+
+.borderBottomBlack {
+    border-bottom: solid 1px #000 !important;
+}
+
+.portfelModule {
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    padding-left: 65px;
+    padding-right: 112px;
+    position: relative;
+}
+
+.portfelModule .saldo {
+    position: absolute;
+    right: 10px;
+    text-align: center;
+    font-size: 0.8em;
+    width: 95px;
+}
+
+.portfelModule span.underline {
+    display: inline-block;
+    padding-bottom: 5px;
+    border-bottom: solid 1px #000;
+    margin-bottom: 2px;
+    width: 100%;
+}
+
+.portfelModule .ikonaPortfel {
+    width: 38px;
+    height: 38px;
+    position: absolute;
+    left: 10px;
+    top: 20px;
+    background-size: 38px 38px;
+    background-image: url(saldo_plus@3x.png);
+}
+
+.portfelModule .ikonaPortfel.minus {
+    background-image: url(saldo_minus@3x.png);
+}
+
+.listElement {
+    position: relative;
+    padding: 20px 40px 24px 10px;
+}
+
+.bigGreen {
+    color: #09CA8A;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.arrowRight {
+    width: 8px;
+    height: 13px;
+    background-image: url(arrowRight.png);
+    background-size: 8px 13px;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -7px;
+}
+
+.col-1-2 {
+    width: 50%;
+    float: left;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.whiteBadge {
+    display: inline-block;
+    color: #09CA8A;
+    background-color: white;
+    padding: 1px 4px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    line-height: 19px;
+}
+
+.paddingR5 {
+    padding-right: 5px;
+}
+
+.paddingL5 {
+    padding-left: 5px;
+}
+
+.doubleButtons {
+    font-size: 0.9em;
+}
+
+.rate {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0px;
+}
+
+.rate .star {
+    width: 45px;
+    height: 43px;
+    background: url(star_icon_full@3x.png);
+    background-size: 45px 43px;
+}
+
+.rate .star.starEmpty {
+    width: 45px;
+    height: 43px;
+    background: url(star_icon_empty@3x.png);
+    background-size: 45px 43px;
+}
+
+.scale {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0px;
+}
+
+.scaleElement {
+    width: 1px;
+    height: 7px;
+    background-color: #000;
+}
+
+.zajetoscModule {
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+.bar {
+    height: 20px;
+    background-color: #09CA8A;
+    float: left;
+    border-radius: 20px;
+    border: solid 2px #FFF;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.bar[data-time]:before {
+    content: attr(data-time);
+    width: 29px;
+    height: 15px;
+    background-image: url(tip.png);
+    background-size: 29px 15px;
+    color: #FFF;
+    position: absolute;
+    left: 0px;
+    top: -17px;
+    font-size: 9px;
+    text-align: center;
+}
+
+.redBar {
+    background-color: #FF628A;
+}
+
+.noPadding {
+    padding: 0px;
+}
+
+.bars {
+    padding-top: 30px;
+}
+
+.time {
+    font-size: 4em;
+    margin-bottom: 15px;
+}
+
+.alertWhite {
+    padding: 10px;
+    position: relative;
+    padding-left: 45px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border-top: solid 3px #FFF;
+    border-bottom: solid 3px #FFF;
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.alertWhite:after {
+    content: "";
+    position: absolute;
+    background-image: url(alert-white.png);
+    background-size: 25px 24px;
+    width: 25px;
+    height: 24px;
+    left: 10px;
+    top: 6px;
+}
+
+.colorHeader {
+    background-color: #09ca8a;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 30px;
+    color: #FFF;
+    text-align: center;
+}
+
+.colorHeader .submitButton.white {
+    color: #09ca8a;
+}
+
+.redHeader.colorHeader {
+    background-color: #FF4477;
+}
+
+.redHeader.colorHeader .submitButton.white {
+    color: #FF4477;
+}
+
+.blueHeader.colorHeader {
+    background-color: #02458D;
+}
+
+.blueHeader.colorHeader .submitButton.white {
+    color: #02458D;
+}
+
+.walletImg {
+    width: 130px;
+    height: 130px;
+    margin: auto;
+}
+
+.text-center {
+    text-align: center;
 }

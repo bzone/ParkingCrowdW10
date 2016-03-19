@@ -48,7 +48,7 @@ h6 {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
-  font-size: 17px;
+  font-size: 15px !important;
   background-color: #fff;
   position: absolute;
   top: 0px;
@@ -2480,6 +2480,8 @@ h6 {
   border-bottom: none;
   min-height: 24px;
   line-height: 24px;
+  margin-bottom: 10px;
+  margin-top: 5px;
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .list__header:first-child {
@@ -2511,7 +2513,7 @@ h6 {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-weight: 400;
-  font-size: 17px;
+  font-size: 15px;
   padding: 0;
   margin: 0;
   list-style-type: none;
@@ -2524,6 +2526,7 @@ h6 {
   border-top: 1px solid #000;
   border-bottom: 1px solid #000;
   background-color: #fff;
+  margin-bottom: 20px;
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .list {
@@ -2547,7 +2550,7 @@ h6 {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   display: block;
-  padding: 0 10px 0 10px;
+  padding: 0 10px 0 0px;
   margin: 0 0 0 0;
   border-top: none;
   border-bottom: 1px solid #000;
@@ -2555,6 +2558,7 @@ h6 {
   background-color: transparent;
   min-height: 44px;
   line-height: 44px;
+  margin-left: 10px;
 }
 .list__item--no-padding {
   padding: 0;
@@ -2689,7 +2693,7 @@ h6 {
 .switch--list-item {
   float: right;
   margin-top: 6px;
-  margin-right: 10px;
+  /* margin-right: 10px; */
 }
 /* topdoc
   name: List Item with Chevron

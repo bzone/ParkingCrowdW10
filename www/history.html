@@ -1,0 +1,37 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="menu.toggleMenu()">
+                <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">historia najmu</div>
+    </ons-toolbar>
+    <div>
+        <div class="task" ng-repeat="element in historyList |  orderBy:'-created_at'">
+            <div class="listElement borderBottomBlack" ng-if="element.paid==1||element.canceled==1" ng-click="showReservationDetails(element)">
+                <div class="arrowRight"></div>
+                <div class="clear"></div>
+
+                <div class="bigGreen">
+                    {{key}} od {{element.start_date | date: 'dd.MM.yyyy HH:mm'}}
+                    <br> do {{element.end_date | date: 'dd.MM.yyyy HH:mm'}}
+                </div>
+                <div class="clear"></div>
+                {{element.created_at | date: 'dd.MM.yyyy - HH:mm'}}
+                <br>
+                <span ng-if="element.offer_place">
+                                Wynajem parking<br>
+                                {{element.offer_place.name}}<br>
+                            
+                            </span>
+                <span ng-if="element.offer_car">
+                                Wynajem samochodu<br>
+                                {{element.offer_place.name}}<br>   
+                 </span>
+                <span class="green" ng-if="element.canceled!=1">zakończone - czas: {{element.hours | number:2}} h</span>
+                <span class="red" ng-if="element.canceled==1">Anulowano <span ng-if="element.canceled_by=='owner'">przez wynajmującego</span></span>
+            </div>
+        </div>
+    </div>
+</ons-page>

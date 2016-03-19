@@ -1,0 +1,128 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="naviDash.popPage()">
+                <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">detale oferty</div>
+        <div class="right">
+            <ons-toolbar-button>
+                <ons-icon icon="ion-ios-heart-outline" size="28px" fixed-width="false" ng-if="!currentPlace.favourite" ng-click="addCarToFav(currentPlace.id)"></ons-icon>
+                <ons-icon icon="ion-ios-heart" size="28px" fixed-width="false" ng-if="currentPlace.favourite" ng-click="removeCarFromFav(currentPlace.id)"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+    </ons-toolbar>
+    <div class="navigation-bar">
+        <div class="navigation-bar__center">
+            <div class="button-bar" style="width:90%;margin:7px 5%; ">
+                <div class="button-bar__item" ng-click="changeToMap()">
+                    <input type="radio" name="navi-segment-a" checked>
+                    <div class="button-bar__button">Mapa</div>
+                </div>
+
+                <div class="button-bar__item" ng-click="changeToPhotos()">
+                    <input type="radio" name="navi-segment-a">
+                    <div class="button-bar__button">Zdjecia</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div ng-if="currentPlace.view=='map'">
+            <img src="http://maps.googleapis.com/maps/api/staticmap?center={{currentPlace.latitude}},{{currentPlace.longitude}}&zoom=15&scale=2&size=375x200&maptype=roadmap&key=AIzaSyAtxSIxBFohxnPNp2BYs9ysrHY_cKJxblA&format=png&visual_refresh=true&markers=icon:http://dl.dropboxusercontent.com/u/28981503/mappoint.png%7Cshadow:false%7C{{currentPlace.latitude}},{{currentPlace.longitude}}" class="img-responsive" />
+        </div>
+        <div ng-if="currentPlace.view=='photos'">
+            <!-- NOTE:slider zdjec -->
+            <ons-carousel style="width: 100%; height: 200px" auto-refresh swipeable auto-scroll>
+                <ons-carousel-item ng-repeat="image in currentPlace.images">
+                    <img src="http://parkingcrowd.dev.thickmug.com{{image.image_url}}" class="img-responsive" />
+                </ons-carousel-item>
+            </ons-carousel>
+        </div>
+        <br>
+        <div class="doubleButtons" ng-if="!currentPlace.booked_by">
+            <div class="buttonHolder">
+                <a class="submitButton" ng-click="parkNow(currentPlace.id)">Wynajmnij teraz <span class="whiteBadge">{{currentPlace.price_per_hour | number:2}}zł/h</span></a>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <div class="adresModule">
+            <strong>{{currentPlace.brand}} {{currentPlace.model}}</strong>
+            <br/>
+            <div class="starFull" ng-if="currentPlace.rating>0"></div>
+            <div class="starFull" ng-if="currentPlace.rating>1"></div>
+            <div class="starFull" ng-if="currentPlace.rating>2"></div>
+            <div class="starFull" ng-if="currentPlace.rating>3"></div>
+            <div class="starFull" ng-if="currentPlace.rating>4"></div>
+            <div class="starEmpty" ng-if="currentPlace.rating<5"></div>
+            <div class="starEmpty" ng-if="currentPlace.rating<4"></div>
+            <div class="starEmpty" ng-if="currentPlace.rating<3"></div>
+            <div class="starEmpty" ng-if="currentPlace.rating<2"></div>
+            <div class="starEmpty" ng-if="currentPlace.rating<1"></div>
+            <div class="clear"></div>
+            {{currentPlace.address_street}}
+            <br/> {{currentPlace.address_postcode}} {{currentPlace.address_city}}
+        </div>
+        <ul class="list">
+            <li class="list__header">
+                Informacje o samochodzie
+            </li>
+            <li class="list__item">
+                {{currentPlace.number_of_seats}} osobowy
+            </li>
+            <li class="list__item">
+                <div class="inputLabel">
+                    Klimatyzacja
+                </div>
+                <div class="inputHolder checkbox">
+                    <input type="checkbox" checked="">
+                    <div class="checkbox__checkmark checkbox--list-item__checkmark list-check" ng-if="currentPlace.prop_air_conditioning==1"></div>
+                </div>
+            </li>
+            <li class="list__item">
+                <div class="inputLabel">
+                    Kabriolet
+                </div>
+                <div class="inputHolder checkbox">
+                    <input type="checkbox" checked="">
+                    <div class="checkbox__checkmark checkbox--list-item__checkmark list-check" ng-if="currentPlace.prop_cabriolet==1"></div>
+                </div>
+            </li>
+            <li class="list__item">
+                <div class="inputLabel">
+                    ABS
+                </div>
+                <div class="inputHolder checkbox">
+                    <input type="checkbox" checked="">
+                    <div class="checkbox__checkmark checkbox--list-item__checkmark list-check" ng-if="currentPlace.prop_abs==1"></div>
+
+                </div>
+            </li>
+            <li class="list__item">
+                <div class="inputLabel">
+                    Wspomaganie
+                </div>
+                <div class="inputHolder checkbox">
+                    <input type="checkbox" checked="">
+                    <div class="checkbox__checkmark checkbox--list-item__checkmark list-check" ng-if="currentPlace.prop_power_steering==1"></div>
+
+                </div>
+            </li>
+            <li class="list__item">
+                Informacje dodatkowe:
+                <br> <span style="line-height:20px; display: block; margin-bottom: 15px;">{{currentPlace.description}}</span>
+            </li>
+        </ul>
+        <div class="wynajmujacyModule">
+            <div class="avatar" style="background-image:url('http://parkingcrowd.dev.thickmug.com{{currentPlace.user.image_url}}');"></div>
+            <strong>{{currentPlace.user.first_name}} {{currentPlace.user.last_name}}</strong>
+            <br>
+            <div ng-if="currentPlace.user.first_offer_created_at.length>4">
+                Wynajmuje od: <span class="green">{{currentPlace.user.first_offer_created_at | date: 'dd.MM.yyyy'}}</span></div>
+            <br>
+            <br>{{currentPlace.user.about}}
+        </div>
+    </div>
+</ons-page>

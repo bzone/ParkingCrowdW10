@@ -7,16 +7,33 @@
         </div>
         <div class="center">notyfikacje</div>
     </ons-toolbar>
-    <div class="contenHolder whiteFrame noContentPaddings">
+    <div>
         <div class="task" ng-repeat="element in notifications">
-            <div class="userInList" ng-if="element.action=='assign_challenge'" ng-click="questDetails(element.object_id)" style="height: 66px;">
-                <div class="arrow"></div>
-                <div class="leftPart">
-                    <div class="avatar" style="background-image:url('http://daredot.dev.thickmug.com{{element.sender.image_url}}');" ng-if="element.sender.image_url!='null'"></div>
-                    <div class="avatar" style="background-image:url('img/noavatar.png');" ng-if="element.sender.image_url=='null'"></div>
-                </div>
-                <span class="username" style="font-size:16px;">Zaproszenie do zestawu:<br/>{{element.object.name}}</span>
-                <span class="red">{{element.sender.first_name}} {{element.sender.last_name}}</span>
+            <div class="listElement borderBottomBlack" ng-if="element.action=='new_rent'&&element.reservation.offer_car" ng-click="showCar(element.reservation.offer_car.id)">
+                <div class="arrowRight"></div>
+                <div class="clear"></div>
+                {{element.created_at | date: 'dd.MM.yyyy HH:mm'}}
+                <br>
+                <div ng-if="element.reservation.offer_car">
+                    <strong>Nowy wynajem samochodu</strong>
+                    <br> {{element.reservation.offer_car.brand}} {{element.reservation.offer_car.model}}</div>
+                <div ng-if="element.reservation.offer_place">
+                    <strong>Nowy wynajem miejsca parkingowego</strong>
+                    <br> {{element.reservation.offer_place.name}}</div>
+                <span class="red" ng-if="element.reservation.canceled==1">anulowano przez właściciela  <br></span>
+            </div>
+            <div class="listElement borderBottomBlack" ng-if="element.action=='new_rent'&&element.reservation.offer_place" ng-click="showPlace(element.reservation.offer_place.id)">
+                <div class="arrowRight"></div>
+                <div class="clear"></div>
+                {{element.created_at | date: 'dd.MM.yyyy HH:mm'}}
+                <br>
+                <div ng-if="element.reservation.offer_car">
+                    <strong>Nowy wynajem samochodu</strong>
+                    <br> {{element.reservation.offer_car.brand}} {{element.reservation.offer_car.model}}</div>
+                <div ng-if="element.reservation.offer_place">
+                    <strong>Nowy wynajem miejsca parkingowego</strong>
+                    <br> {{element.reservation.offer_place.name}}</div>
+                <span class="red" ng-if="element.reservation.canceled==1">anulowano przez właściciela  <br></span>
             </div>
         </div>
     </div>
