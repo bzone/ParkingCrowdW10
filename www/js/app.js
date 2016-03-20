@@ -1,13 +1,93 @@
 (function () {
     'use strict';
-    var module = angular.module('app', ['onsen']);
+    var module = angular.module('app', ['onsen', 'uiGmapgoogle-maps']);
     var url = "http://parkingcrowd.dev.thickmug.com";
     var currentApiKey;
+
+    var marker1 = {
+        id: 1,
+        latitude: 37.769,
+        longitude: -122.44
+    };
+
+    var markersDisplayed = 0;
+    var markersAdded = 0;
+    var maxMarkersToDisplay = 3;
+    var increment = 0.02;
+    var startingLongitude = -122.44;
+    var startingLatitude = 37.769;
+
+
 
 
     module.controller('AppController', function ($scope, $projekty, $filter) {
         $scope.currentPage = "Home";
+        $scope.rent = false;
 
+
+        $scope.map = {
+            center: {
+                latitude: 37.7699298,
+                longitude: -122.4469157
+            },
+            zoom: 12
+        };
+        $scope.map.markers = [];
+
+        $scope.map.options = {
+            disableDefaultUI: true
+        }
+
+        $scope.removeMarkers = function () {
+            $scope.map.markers = [];
+            markersDisplayed = 0;
+            markersAdded = 0;
+        }
+
+        $scope.toggleAddAndRemoveMarkers = function () {
+
+            //if 3 displayed already, pop first one off of the array
+            if (markersDisplayed >= 3) {
+                markersDisplayed--;
+                $scope.map.markers.shift();
+            }
+            //addd a new position
+            markersDisplayed++;
+            $scope.map.markers.push({
+                id: markersAdded,
+                latitude: startingLatitude,
+                longitude: (startingLongitude + (markersAdded * increment))
+            });
+            markersAdded++;
+        };
+
+        $scope.centerMap = function (lat, long) {
+            $scope.map.center = {
+                latitude: lat,
+                longitude: long
+            }
+        }
+
+        var markerDetails = function (marker) {
+            console.log(marker.model.id);
+            $scope.showPlace(marker.model.id);
+        }
+
+        $scope.markerDetails = markerDetails;
+
+        $scope.loadMarkers = function (type) {
+            $scope.map.markers = [];
+            if (type = "places") {
+                angular.forEach($scope.placesList, function (mark, index) {
+                    $scope.map.markers.push({
+                        id: mark.id,
+                        latitude: mark.latitude,
+                        longitude: mark.longitude,
+                        mapIcon: 'https://dl.dropboxusercontent.com/u/28981503/mappoint.png'
+                    });
+                });
+            }
+        }
 
         $scope.isCheckedById = function (id) {
             var checked = $("input[id=" + id + "]:checked").length;
@@ -629,9 +709,13 @@
                 var currentLocationLat = position.coords.latitude;
                 var currentLocationLong = position.coords.longitude;
 
+                $scope.centerMap(currentLocationLat, currentLocationLong);
+                $scope.map.markers = [];
+                $scope.$apply();
+
                 $.ajax({
-                    type: "POST",
-                    url: url + '/api/v1/user/update-location',
+                    type: "GET",
+                    url: url + '/api/v1/offers/places',
                     beforeSend: function () {},
                     data: {
                         latitude: currentLocationLat,
@@ -645,7 +729,42 @@
                     success: function (respond) {
                         window.console && console.log(respond);
                         if (respond.status == "success") {
-                            window.console && console.log('Zaktualizowano lokalizacje');
+                            window.console && console.log('Pobrano listę miejsc');
+                            $scope.placesList = angular.fromJson(respond.data);
+                            $scope.loadMarkers('places');
+                            $scope.$apply();
+
+                            $.ajax({
+                                type: "GET",
+                                url: url + '/api/v1/offers/cars',
+                                beforeSend: function () {},
+                                data: {
+                                    latitude: currentLocationLat,
+                                    longitude: currentLocationLong
+                                },
+                                headers: {
+                                    "api-key": currentApiKey
+                                },
+                                datatype: 'json',
+                                cache: false,
+                                success: function (respond) {
+                                    window.console && console.log(respond);
+                                    if (respond.status == "success") {
+                                        window.console && console.log('Pobrano listę samochodow');
+                                        $scope.carsList = angular.fromJson(respond.data);
+                                        $scope.$apply();
+
+                                    } else if (respond.status == "error") {
+                                        window.console && console.log('error ' + respond.data);
+                                    }
+                                },
+                                error: function (respond) {
+                                    window.console && console.log('error ' + JSON.stringify(respond));
+                                }
+                            });
+
+
+
                         } else if (respond.status == "error") {
                             window.console && console.log('error ' + respond.data);
                         }
@@ -909,28 +1028,360 @@
         }
 
 
+
         $scope.showReservationDetails = function (element) {
             $scope.detailsView = element;
+            $scope.currentPage = 'detalerezerwacji';
             naviDash.pushPage('reservationdetails.html');
+        }
+
+        $scope.reservePlace = function () {
+            $scope.currentPage = 'rezerwacja';
+            $scope.reserveFrom = $scope.currentPlace.now;
+            $scope.reserveTo = $scope.currentPlace.later;
+            naviDash.pushPage('reserve.html');
+        }
+
+        $scope.reservePlaceConfirm = function () {
+            var odd = $('#dataod').val();
+            var dod = $('#datado').val();
+
+
+            $.ajax({
+                type: "POST",
+                url: url + '/api/v1/user/reservations/create',
+                beforeSend: function () {
+                    $("#spinner").css('display', 'block');
+                },
+                data: {
+                    offer_place_id: $scope.currentPlace.id,
+                    start_date: odd,
+                    end_date: dod
+                },
+                headers: {
+                    "api-key": currentApiKey
+                },
+                datatype: 'json',
+                cache: false,
+                success: function (respond) {
+                    window.console && console.log(respond);
+
+                    if (respond.status == "success") {
+                        window.console && console.log('Dodano rezerwacje');
+
+                        $scope.currentPage = 'rezerwacjenie';
+                        $("#spinner").fadeOut(1000);
+                        naviDash.popPage();
+
+                    } else if (respond.status == "error") {
+                        window.console && console.log('error ' + respond.data);
+                    }
+                },
+                error: function (respond) {
+                    $("#spinner").fadeOut(1000);
+                    window.console && console.log('error ' + JSON.stringify(respond));
+                }
+            });
+
 
         }
 
+        $scope.cancleReservation = function (id) {
+            $.ajax({
+                type: "POST",
+                url: url + '/api/v1/user/reservations/destroy/' + id,
+                beforeSend: function () {
+                    $("#spinner").css('display', 'block');
+                },
+                data: {},
+                headers: {
+                    "api-key": currentApiKey
+                },
+                datatype: 'json',
+                cache: false,
+                success: function (respond) {
+                    window.console && console.log(respond);
+
+                    if (respond.status == "success") {
+                        window.console && console.log('Anulowano rezerwację');
+
+                        $scope.currentPage = 'rezerwacje';
+                        $.ajax({
+                            type: "GET",
+                            url: url + '/api/v1/user/reservations',
+                            beforeSend: function () {
+                                $("#spinner").css('display', 'block');
+                            },
+                            data: {
+                                limit: 1000,
+                                canceled: 1
+                            },
+                            headers: {
+                                "api-key": currentApiKey
+                            },
+                            datatype: 'json',
+                            cache: false,
+                            success: function (respond) {
+                                window.console && console.log(respond);
+                                if (respond.status == "success") {
+                                    window.console && console.log('Pobrano rezerwacje');
+                                    $scope.reservationsList = angular.fromJson(respond.data);
+                                    $scope.$apply();
+                                    naviDash.popPage();
+                                    $("#spinner").fadeOut(1000);
+
+                                } else if (respond.status == "error") {
+                                    window.console && console.log('error ' + respond.data);
+                                    $("#spinner").fadeOut(1000);
+                                    ons.notification.alert({
+                                        message: 'Błąd pobierania danych'
+                                    });
+                                }
+                            },
+                            error: function (respond) {
+                                window.console && console.log('error ' + JSON.stringify(respond));
+                                $("#spinner").fadeOut(1000);
+                                ons.notification.alert({
+                                    message: 'Podane dane są niepoprawne'
+                                });
+                            }
+                        });
 
 
-        $scope.distanceStart = function () {
-            $scope.taskDetailsData.display.active = 1;
-            var iFrequency = 5000; // expressed in miliseconds
-            var myInterval = 0;
+                    } else if (respond.status == "error") {
+                        window.console && console.log('error ' + respond.data);
+                    }
+                },
+                error: function (respond) {
+                    $("#spinner").fadeOut(1000);
+                    window.console && console.log('error ' + JSON.stringify(respond));
+                }
+            });
+        }
+
+        var timeinterval = 0;
+
+        $scope.parkNow = function (type) {
+            if ($scope.rent == true) {
+                ons.notification.alert({
+                    message: 'Masz już aktywną usługę'
+                });
+            } else {
+
+                $scope.rent = true;
+                $scope.rentVisible = true;
+                naviDash.popPage();
+                var iFrequency = 1000; // expressed in miliseconds
+
+                $scope.rentTime = {};
+                $scope.rentTime.type = type;
+                $scope.rentTime.rating = 0;
+                $scope.rentTime.sec = 0;
+                $scope.rentTime.min = 0;
+                $scope.rentTime.hours = 0;
+                $scope.rentTime.price = 0;
+                $scope.rentTime.priceBase = $scope.currentPlace.price_per_hour;
+                $scope.rentTime.price = $scope.rentTime.price + ($scope.rentTime.priceBase / 4);
+                $scope.rentTime.currentPlace = $scope.currentPlace;
+
+                if ($scope.rentTime.type == 'place') {
+                    $.ajax({
+                        type: "POST",
+                        url: url + '/api/v1/user/place/start',
+                        beforeSend: function () {
+                            $("#spinner").css('display', 'block');
+                        },
+                        data: {
+                            offer_place_id: $scope.currentPlace.id,
+                            start_date: new Date()
+                        },
+                        headers: {
+                            "api-key": currentApiKey
+                        },
+                        datatype: 'json',
+                        cache: false,
+                        success: function (respond) {
+                            window.console && console.log(respond);
+
+                            if (respond.status == "success") {
+                                window.console && console.log('Rozpoczęto parkowanie');
+                                $scope.currentReservation = angular.fromJson(respond.data);
+                                $scope.currentPage = 'rezerwacjenie2';
+                                $("#spinner").fadeOut(1000);
+
+                            } else if (respond.status == "error") {
+                                window.console && console.log('error ' + respond.data);
+                            }
+                        },
+                        error: function (respond) {
+                            $("#spinner").fadeOut(1000);
+                            window.console && console.log('error ' + JSON.stringify(respond));
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: url + '/api/v1/user/car/start',
+                        beforeSend: function () {
+                            $("#spinner").css('display', 'block');
+                        },
+                        data: {
+                            offer_car_id: $scope.currentPlace.id,
+                            start_date: new Date()
+                        },
+                        headers: {
+                            "api-key": currentApiKey
+                        },
+                        datatype: 'json',
+                        cache: false,
+                        success: function (respond) {
+                            window.console && console.log(respond);
+
+                            if (respond.status == "success") {
+                                window.console && console.log('Rozpoczęto wynajem');
+                                $scope.currentReservation = angular.fromJson(respond.data);
+                                $scope.currentPage = 'rezerwacjenie2';
+                                $("#spinner").fadeOut(1000);
+
+                            } else if (respond.status == "error") {
+                                window.console && console.log('error ' + respond.data);
+                            }
+                        },
+                        error: function (respond) {
+                            $("#spinner").fadeOut(1000);
+                            window.console && console.log('error ' + JSON.stringify(respond));
+                        }
+                    });
+                }
 
 
 
-            // STARTS and Resets the loop if any
-            function startLoop() {
-                if (myInterval > 0) clearInterval(myInterval); // stop
-                myInterval = setInterval(window.console && console.log(myInterval), iFrequency); // run
+
+                // STARTS and Resets the loop if any
+                timeinterval = setInterval(function () {
+                    $scope.rentTime.sec++;
+                    if ($scope.rentTime.sec == 60) {
+                        $scope.rentTime.sec = 0;
+                        $scope.rentTime.min++;
+                        if ($scope.rentTime.min == 15) {
+                            $scope.rentTime.price = $scope.rentTime.price + ($scope.rentTime.priceBase / 4);
+                        }
+                        if ($scope.rentTime.min == 30) {
+                            $scope.rentTime.price = $scope.rentTime.price + ($scope.rentTime.priceBase / 4);
+                        }
+                        if ($scope.rentTime.min == 45) {
+                            $scope.rentTime.price = $scope.rentTime.price + ($scope.rentTime.priceBase / 4);
+                        }
+                        if ($scope.rentTime.min == 60) {
+                            $scope.rentTime.price = $scope.rentTime.price + ($scope.rentTime.priceBase / 4);
+                            $scope.rentTime.min = 0;
+                            $scope.rentTime.hours++;
+                        }
+                    }
+                    $scope.$apply();
+                }, 1000);
             }
+        }
 
-            startLoop();
+        $scope.rentDetails = function () {
+            $scope.rentVisible = false;
+            naviDash.pushPage("rentdetails.html", {
+                animation: "lift"
+            })
+        }
+
+        $scope.hideRentDetails = function () {
+            $scope.rentVisible = true;
+            naviDash.popPage();
+        }
+
+        $scope.parkStop = function () {
+
+            $.ajax({
+                type: "POST",
+                url: url + '/api/v1/user/place/stop',
+                beforeSend: function () {
+                    $("#spinner").css('display', 'block');
+                },
+                data: {
+                    reservation_id: $scope.currentReservation.id,
+                    end_date: new Date()
+                },
+                headers: {
+                    "api-key": currentApiKey
+                },
+                datatype: 'json',
+                cache: false,
+                success: function (respond) {
+                    window.console && console.log(respond);
+
+                    if (respond.status == "success") {
+                        window.console && console.log('Zakończono parkowanie');
+                        $scope.currentReservation = angular.fromJson(respond.data);
+                        $scope.currentPage = 'rezerwacjenie2';
+                        $("#spinner").fadeOut(1000);
+                        clearInterval(timeinterval);
+                        $scope.rent = false;
+                        $scope.rentVisible = false;
+                        $scope.$apply();
+                        naviDash.pushPage("rentsummary.html", {
+                            animation: "fade"
+                        })
+
+
+                    } else if (respond.status == "error") {
+                        window.console && console.log('error ' + respond.data);
+                    }
+                },
+                error: function (respond) {
+                    $("#spinner").fadeOut(1000);
+                    window.console && console.log('error ' + JSON.stringify(respond));
+                }
+            });
+        }
+
+        $scope.setRating = function (number) {
+            $scope.rentTime.rating = number;
+        }
+
+        $scope.sendRating = function () {
+
+
+            $.ajax({
+                type: "POST",
+                url: url + '/api/v1/user/reservations/rate',
+                beforeSend: function () {
+                    $("#spinner").css('display', 'block');
+                },
+                data: {
+                    reservation_id: $scope.currentReservation.id,
+                    rate: $scope.rentTime.rating
+                },
+                headers: {
+                    "api-key": currentApiKey
+                },
+                datatype: 'json',
+                cache: false,
+                success: function (respond) {
+                    window.console && console.log(respond);
+
+                    if (respond.status == "success") {
+                        window.console && console.log('oceniono oferte');
+                        $scope.currentPage = 'rezerwacjenie3';
+                        $("#spinner").fadeOut(1000);
+                        naviDash.resetToPage('homedash.html', {
+                            animation: "fade"
+                        })
+
+                    } else if (respond.status == "error") {
+                        window.console && console.log('error ' + respond.data);
+                    }
+                },
+                error: function (respond) {
+                    $("#spinner").fadeOut(1000);
+                    window.console && console.log('error ' + JSON.stringify(respond));
+                }
+            });
 
         }
 

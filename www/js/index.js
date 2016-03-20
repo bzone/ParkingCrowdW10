@@ -40,18 +40,17 @@ var app = {
             thePlatform = "ios";
         }
         document.body.className = thePlatform;
-        if (navigator.userAgent.match(/IEMobile/))
-    {
-        var ieBodyHeight = $("body").outerHeight();
-        var ieBodyHeightNew = ieBodyHeight - 55;
-        $("head").append('<meta name="viewport" content="height=' + ieBodyHeightNew + '" />');
-      
-         
-           StatusBar.styleLightContent();
-        
-    
-        
-    }
+        if (navigator.userAgent.match(/IEMobile/)) {
+            var ieBodyHeight = $("body").outerHeight();
+            var ieBodyHeightNew = ieBodyHeight - 155;
+            $("head").append('<meta name="viewport" content="height=' + ieBodyHeightNew + '" />');
+
+
+            StatusBar.styleLightContent();
+
+
+
+        }
     },
     // Update DOM on a Received Event
     receivedEvent: function (id) {

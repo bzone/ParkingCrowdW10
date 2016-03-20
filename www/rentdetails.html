@@ -1,0 +1,71 @@
+<ons-page>
+    <ons-toolbar style="background-color: #FF4477;">
+        <div class="left">
+            <ons-toolbar-button ng-click="hideRentDetails()">
+                <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">szczegóły</div>
+    </ons-toolbar>
+
+    <div>
+        <div class="colorHeader redHeader" ng-if="rentTime.type=='place'">
+            <div class="time">
+                {{rentTime.hours}}:<span ng-if="rentTime.min<10">0</span>{{rentTime.min}}:<span ng-if="rentTime.sec<10">0</span>{{rentTime.sec}}
+            </div>
+            całkowity koszt parkowania: {{rentTime.price | number:2}}zł
+            <br/>
+            <br/>
+            <a class="submitButton white" ng-click="parkStop()">zakończ parkowanie</a>
+        </div>
+
+        <div class="colorHeader redHeader" ng-if="rentTime.type=='car'">
+            {{rentTime.currentPlace.brand}} {{rentTime.currentPlace.model}}
+            <div class="time">
+                {{rentTime.hours}}:<span ng-if="rentTime.min<10">0</span>{{rentTime.min}}:<span ng-if="rentTime.sec<10">0</span>{{rentTime.sec}}
+            </div>
+            całkowity koszt wynajmu: {{rentTime.price | number:2}}zł
+            <br/>
+            <br/>
+            <div class="alertWhite">
+                koneic wynajmu musi potwierdzić właściciel wynajmowanego pojazu
+            </div>
+        </div>
+
+        <div>
+            <img src="http://maps.googleapis.com/maps/api/staticmap?center={{rentTime.currentPlace.latitude}},{{rentTime.currentPlace.longitude}}&zoom=15&scale=2&size=375x200&maptype=roadmap&key=AIzaSyAtxSIxBFohxnPNp2BYs9ysrHY_cKJxblA&format=png&visual_refresh=true&markers=icon:http://dl.dropboxusercontent.com/u/28981503/mappoint.png%7Cshadow:false%7C{{rentTime.currentPlace.latitude}},{{rentTime.currentPlace.longitude}}" class="img-responsive" />
+
+            <div class="adresModule" ng-if="rentTime.type=='place'">
+                <strong>{{rentTime.currentPlace.name}}</strong>
+                <br/>
+                <div class="starFull" ng-if="rentTime.currentPlace.rating>0"></div>
+                <div class="starFull" ng-if="rentTime.currentPlace.rating>1"></div>
+                <div class="starFull" ng-if="rentTime.currentPlace.rating>2"></div>
+                <div class="starFull" ng-if="rentTime.currentPlace.rating>3"></div>
+                <div class="starFull" ng-if="rentTime.currentPlace.rating>4"></div>
+                <div class="starEmpty" ng-if="rentTime.currentPlace.rating<5"></div>
+                <div class="starEmpty" ng-if="rentTime.currentPlace.rating<4"></div>
+                <div class="starEmpty" ng-if="rentTime.currentPlace.rating<3"></div>
+                <div class="starEmpty" ng-if="rentTime.currentPlace.rating<2"></div>
+                <div class="starEmpty" ng-if="rentTime.currentPlace.rating<1"></div>
+                <div class="clear"></div>
+                {{rentTime.currentPlace.address_street}}
+                <br/> {{rentTime.currentPlace.address_postcode}} {{rentTime.currentPlace.address_city}}
+            </div>
+
+            <div class="adresModule" ng-if="rentTime.type=='car'">
+                <strong>Miejsce zwrotu pojazdu:</strong>
+                <div class="clear"></div>
+                {{rentTime.currentPlace.address_street}}
+                <br/> {{rentTime.currentPlace.address_postcode}} {{rentTime.currentPlace.address_city}}
+            </div>
+
+            <div class="kontaktModule borderTopBlack">
+                <div class="avatar" style="background-image:url('http://parkingcrowd.dev.thickmug.com{{rentTime.currentPlace.user.image_url}}');"></div>
+                <a class="phoneIcon"></a>
+                <strong>{{rentTime.currentPlace.user.first_name}} {{rentTime.currentPlace.user.last_name}}</strong>
+                <br> {{rentTime.currentPlace.user.phone_number}}
+            </div>
+        </div>
+    </div>
+</ons-page>

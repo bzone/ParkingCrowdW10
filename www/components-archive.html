@@ -11,8 +11,7 @@
     <!-- JS dependencies (order matters!) -->
     <script src="scripts/platformOverrides.js"></script>
     <script src="lib/angular/angular.js"></script>
-    <script src="lib/lodash/dist/lodash.js"></script>
-    <script src='lib/angular-google-maps/dist/angular-google-maps.js'></script>
+
     <script src="lib/onsen/js/onsenui.js"></script>
 
     <!-- CSS dependencies -->
@@ -137,13 +136,11 @@
                     </div>
                 </ons-toolbar>
                 <div class="pageHolder" ng-init="updateLocation()">
-                    <div>
-                        <div style="height:100vh">
-                            <ui-gmap-google-map center='map.center' zoom='map.zoom' options='map.options'>
-                                <ui-gmap-markers models="map.markers" coords="'self'" modelsbyref="false" idkey="model.id" click="markerDetails" icon="'mapIcon'" />
-                            </ui-gmap-google-map>
-                        </div>
-                    </div>
+
+
+
+
+
                 </div>
             </ons-page>
         </ons-navigator>

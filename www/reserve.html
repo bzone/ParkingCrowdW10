@@ -1,0 +1,70 @@
+<ons-page>
+    <ons-toolbar>
+        <div class="left">
+            <ons-toolbar-button ng-click="naviDash.popPage()">
+                <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
+            </ons-toolbar-button>
+        </div>
+        <div class="center">rezerwacja</div>
+    </ons-toolbar>
+
+    <div>
+
+        <img src="http://maps.googleapis.com/maps/api/staticmap?center={{currentPlace.latitude}},{{currentPlace.longitude}}&zoom=15&scale=2&size=375x200&maptype=roadmap&key=AIzaSyAtxSIxBFohxnPNp2BYs9ysrHY_cKJxblA&format=png&visual_refresh=true&markers=icon:http://dl.dropboxusercontent.com/u/28981503/mappoint.png%7Cshadow:false%7C{{currentPlace.latitude}},{{currentPlace.longitude}}" class="img-responsive" />
+
+
+
+
+        <div class="adresModule">
+            <strong>{{currentPlace.name}}</strong>
+            <br/>
+            <div class="starFull" ng-if="currentPlace.rating>0"></div>
+            <div class="starFull" ng-if="currentPlace.rating>1"></div>
+            <div class="starFull" ng-if="currentPlace.rating>2"></div>
+            <div class="starFull" ng-if="currentPlace.rating>3"></div>
+            <div class="starFull" ng-if="currentPlace.rating>4"></div>
+            <div class="starEmpty" ng-if="currentPlace.rating<5"></div>
+            <div class="starEmpty" ng-if="currentPlace.rating<4"></div>
+            <div class="starEmpty" ng-if="currentPlace.rating<3"></div>
+            <div class="starEmpty" ng-if="currentPlace.rating<2"></div>
+            <div class="starEmpty" ng-if="currentPlace.rating<1"></div>
+            <div class="clear"></div>
+            {{currentPlace.address_street}}
+            <br/> {{currentPlace.address_postcode}} {{currentPlace.address_city}}
+        </div>
+
+        <ul class="list">
+            <li class="list__item">
+                <div class="inputLabel">
+                    Od
+                </div>
+                <div class="inputHolder">
+                    <input type="datetime-local" class="text-input text-input--transparent text-right" style="width:100%; margin-top:4px;" placeholder="data od" id="dataod" ng-model="reserveFrom" ng-init="reserveFrom">
+                </div>
+            </li>
+            <li class="list__item">
+                <div class="inputLabel">
+                    Do
+                </div>
+                <div class="inputHolder">
+                    <input type="datetime-local" class="text-input text-input--transparent text-right" style="width:100%; margin-top:4px;" placeholder="data do" id="datado" ng-model="reserveTo" ng-init="reserveTo">
+                </div>
+            </li>
+        </ul>
+        <div ng-if="currentPlace.reservations.length>0">
+            <div class="alertModule">
+                Parking niedostępnych w terminach:
+            </div>
+            <ul class="list noBorderTop">
+                <li class="list__item" ng-repeat="term in currentPlace.reservations">
+                    od {{term.start_date | date: 'dd.MM.yyyy HH:mm'}} do {{term.end_date | date: 'dd.MM.yyyy HH:mm'}}
+                </li>
+            </ul>
+        </div>
+
+        <div class="buttonHolder">
+            <a class="submitButton alternative" ng-click="reservePlaceConfirm()">Zarezerwuj</a>
+            <div class="clear"></div>
+        </div>
+    </div>
+</ons-page>
