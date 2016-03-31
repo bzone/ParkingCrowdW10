@@ -664,8 +664,8 @@
 
         $scope.map = {
             center: {
-                latitude: 37.7699298,
-                longitude: -122.4469157
+                latitude: 52.405298,
+                longitude: 16.9179432
             },
             zoom: 12
         };
@@ -680,6 +680,50 @@
             markersDisplayed = 0;
             markersAdded = 0;
         }
+        
+          var events = {
+            places_changed:function (searchBox) {
+                alert('ok');
+                var place = searchBox.getPlaces();
+                if (!place || place == 'undefined' || place.length == 0) {
+                    console.log('no place data :(');
+                    return;
+                }
+
+                // refresh the map
+                $scope.map = {
+                    center:{
+                        latitude:place[0].geometry.location.lat(),
+                        longitude:place[0].geometry.location.lng()
+                    },
+                    zoom:10
+                };
+
+                // refresh the marker
+                $scope.marker = {
+                    id:0,
+                    options:{ draggable:false },
+                    coords:{
+                        latitude:place[0].geometry.location.lat(),
+                        longitude:place[0].geometry.location.lng()
+                    }
+                };
+
+            }
+        };
+        
+            $scope.searchbox = {
+            template:'searchbox.tpl.html',
+            events:events,
+                parentdiv:'searchBoxParent',
+            options:{
+                autocomplete:false,
+                types:['address'],
+                componentRestrictions:{
+                    //country:'fr'
+                }
+            }
+        };
 
         $scope.toggleAddAndRemoveMarkers = function () {
 

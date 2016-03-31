@@ -13,6 +13,7 @@
     <script src="lib/angular/angular.js"></script>
     <script src="lib/lodash/dist/lodash.js"></script>
     <script src='lib/angular-google-maps/dist/angular-google-maps.js'></script>
+    <script src='http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&language=en&v=3.20'></script>
     <script src="lib/onsen/js/onsenui.js"></script>
 
     <!-- CSS dependencies -->
@@ -138,8 +139,23 @@
                 </ons-toolbar>
                 <div class="pageHolder" ng-init="updateLocation()">
                     <div>
-                        <div style="height:100vh">
+                        <div style="height:90vh">
+                                   <script type="text/ng-template" id="searchbox.tpl.html">
+                                   <span class="searchHolder">
+            <input type="text"
+                   placeholder="szukaj"
+                   style="width:270px; height:30px;" id="sBox">
+                                      <div class="searchParking active"></div>
+                                      <div class="searchCars"></div>
+                                       </span>
+        </script>
+                               <div id="searchBoxParent"></div>
+
                             <ui-gmap-google-map center='map.center' zoom='map.zoom' options='map.options'>
+                    <ui-gmap-search-box template="searchbox.template"
+                                events="searchbox.events"
+                                position="TOP_RIGHT"
+                                options="searchbox.options" parentdiv="'searchBoxParent'" />
                                 <ui-gmap-markers models="map.markers" coords="'self'" modelsbyref="false" idkey="model.id" click="markerDetails" icon="'mapIcon'" />
                             </ui-gmap-google-map>
                         </div>
