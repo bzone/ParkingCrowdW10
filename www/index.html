@@ -43,8 +43,8 @@
     </div>
 
     <div id="activeTimer" ng-if="rentVisible&&rent" ng-click="rentDetails()">
-        <strong ng-if="rentTime.type=='place'">Trwa parkowanie:</strong>
-        <strong ng-if="rentTime.type=='car'">Trwa wynajem samochodu:</strong>
+        <strong ng-if="rentTime.type=='place'">{{lang.in_progress}}:</strong>
+        <strong ng-if="rentTime.type=='car'">{{lang.parking_service_text}}:</strong>
         <br>{{rentTime.hours}}:<span ng-if="rentTime.min<10">0</span>{{rentTime.min}}:<span ng-if="rentTime.sec<10">0</span>{{rentTime.sec}} - {{rentTime.price | number:2}}zł
         <img src="css/alertarrow.png" style="width:25px; height:16px; float:right; margin-top:-7px;" />
     </div>
@@ -55,13 +55,13 @@
             <form class="loginStyle">
                 <div class="bigLogo"></div>
                 <input type="email" id="loginEmail" class="loginInputStyle" placeholder="e-mail" />
-                <input type="password" id="loginPassword" class="loginInputStyle" placeholder="hasło" />
-                <a class="submitButton" ng-click="loginUser()">zaloguj się</a>
+                <input type="password" id="loginPassword" class="loginInputStyle" placeholder="{{lang.password_text}}" />
+                <a class="submitButton" ng-click="loginUser()">{{lang.login_text}}</a>
                 <br/>
-                <span class="lub">lub</span>
-                <a class="submitButton alternative" onclick="navi.pushPage('register.html', { animation : 'slide' } )">utwórz nowe konto</a>
+                <span class="lub">{{lang.or_text}}</span>
+                <a class="submitButton alternative" onclick="navi.pushPage('register.html', { animation : 'slide' } )">{{lang.create_account_Text}}</a>
                 <br/>
-                <a class="passwordReset" onclick="navi.pushPage('recovery.html', { animation : 'slide' } )">zapomniałeś hasła?</a>
+                <a class="passwordReset" onclick="navi.pushPage('recovery.html', { animation : 'slide' } )">{{lang.reset_text}}</a>
             </form>
         </ons-page>
     </ons-navigator>
@@ -79,10 +79,10 @@
             </ons-toolbar>
             <form class="loginStyle">
                 <div class="bigLogo logoMargin"></div>
-                <input type="text" id="newUserName" class="loginInputStyle" placeholder="nazwa użytkownika" />
+                <input type="text" id="newUserName" class="loginInputStyle" placeholder="{{lang.username_text}}" />
                 <input type="email" id="newUserEmail" class="loginInputStyle" placeholder="e-mail" />
-                <input type="password" id="newUserPassword" class="loginInputStyle" placeholder="hasło" />
-                <a class="submitButton" ng-click="registerUser()">Utwórz konto i zaloguj</a>
+                <input type="password" id="newUserPassword" class="loginInputStyle" placeholder="{{lang.password_text}}" />
+                <a class="submitButton" ng-click="registerUser()">{{lang.register_and_login_text}}</a>
                 <br/>
             </form>
         </ons-page>
@@ -101,12 +101,12 @@
             <form class="loginStyle">
                 <div class="bigLogo logoMargin"></div>
 
-                <p class="recover">Podaj nazwę uzytkownika i adres e-mail powiązany z Twoim kontem.
-                    <br/>Na podany adres otrzymasz przypomnienia swojego hasła.</p>
+                <p class="recover">{{lang.recovery_text}}
+                    <br/>{{lang.recovery_text2}}</p>
                 <br/>
-                <input type="text" id="recoverUser" class="loginInputStyle" placeholder="twoja nazwa użytkownika" />
-                <input type="email" id="recoverEmail" class="loginInputStyle" placeholder="twój e-mail" />
-                <a class="submitButton" ng-click="recoverPassword()">zresetuj hasło</a>
+                <input type="text" id="recoverUser" class="loginInputStyle" placeholder="{{lang.username_text}}" />
+                <input type="email" id="recoverEmail" class="loginInputStyle" placeholder="e-mail" />
+                <a class="submitButton" ng-click="recoverPassword()">{{lang.reset_text}}</a>
                 <br/>
             </form>
         </ons-page>
@@ -161,7 +161,7 @@
             <div class="greenSection">
                 <div class="avatar" style="background-image:url('http://parkingcrowd.dev.thickmug.com{{user.image_url}}');"></div>
                 <div class="name">{{user.first_name}} {{user.last_name}}</div>
-                <div class="portfelInfo">Środki w portfelu: <strong>{{user.balance | number:2}}zł</strong>
+                <div class="portfelInfo">{{lang.money_in_wallet_text}} <strong>{{user.balance | number:2}}zł</strong>
                 </div>
                 <div class="iconsMenu">
                     <div class="menuNotifations" ng-click="openNotifications()"></div>
@@ -172,22 +172,22 @@
             </div>
             <ons-list class="bottom-menu-list">
                 <ons-list-item class="bottom-menu-item" ng-click="openHome()">
-                    <div class="menuIcon home"></div> Ekran główny
+                    <div class="menuIcon home"></div> {{lang.home_screen}}
                 </ons-list-item>
 
                 <ons-list-item class="bottom-menu-item" ng-click="openReservations()">
-                    <div class="menuIcon yourQuests"></div> Moje rezerwacje
+                    <div class="menuIcon yourQuests"></div> {{lang.my_reservation}}
                 </ons-list-item>
 
                 <ons-list-item class="bottom-menu-item" ng-click="openHistory()">
-                    <div class="menuIcon newQuest"></div> Historia najmu
+                    <div class="menuIcon newQuest"></div> {{lang.title_histoy}}
                 </ons-list-item>
 
                 <ons-list-item class="bottom-menu-item" ng-click="openFavs()">
-                    <div class="menuIcon stats"></div> Ulubione
+                    <div class="menuIcon stats"></div> {{lang.title_favourites}}
                 </ons-list-item>
             </ons-list>
-            <a class="submitButton logOut" ng-click="logOut()">Wyloguj</a>
+            <a class="submitButton logOut" ng-click="logOut()">{{lang.logout_button_Text}}</a>
         </ons-page>
     </ons-template>
 </body>

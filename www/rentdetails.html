@@ -5,7 +5,7 @@
                 <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
             </ons-toolbar-button>
         </div>
-        <div class="center">szczegóły</div>
+        <div class="center">{{lang.title_details}}</div>
     </ons-toolbar>
 
     <div>
@@ -13,10 +13,10 @@
             <div class="time">
                 {{rentTime.hours}}:<span ng-if="rentTime.min<10">0</span>{{rentTime.min}}:<span ng-if="rentTime.sec<10">0</span>{{rentTime.sec}}
             </div>
-            całkowity koszt parkowania: {{rentTime.price | number:2}}zł
+            {{lang.overall_parking_cost_text}}{{rentTime.price | number:2}}zł
             <br/>
             <br/>
-            <a class="submitButton white" ng-click="parkStop()">zakończ parkowanie</a>
+            <a class="submitButton white" ng-click="parkStop()">{{lang.stop_parking_text}}</a>
         </div>
 
         <div class="colorHeader redHeader" ng-if="rentTime.type=='car'">
@@ -24,11 +24,11 @@
             <div class="time">
                 {{rentTime.hours}}:<span ng-if="rentTime.min<10">0</span>{{rentTime.min}}:<span ng-if="rentTime.sec<10">0</span>{{rentTime.sec}}
             </div>
-            całkowity koszt wynajmu: {{rentTime.price | number:2}}zł
+            {{lang.overall_parking_cost_text}}{{rentTime.price | number:2}}zł
             <br/>
             <br/>
             <div class="alertWhite">
-                koneic wynajmu musi potwierdzić właściciel wynajmowanego pojazu
+                {{lang.car_rent_close_info_text}}
             </div>
         </div>
 
@@ -54,7 +54,7 @@
             </div>
 
             <div class="adresModule" ng-if="rentTime.type=='car'">
-                <strong>Miejsce zwrotu pojazdu:</strong>
+                <strong>{{lang.car_return_place}}</strong>
                 <div class="clear"></div>
                 {{rentTime.currentPlace.address_street}}
                 <br/> {{rentTime.currentPlace.address_postcode}} {{rentTime.currentPlace.address_city}}

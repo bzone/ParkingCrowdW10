@@ -5,7 +5,7 @@
                 <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
             </ons-toolbar-button>
         </div>
-        <div class="center">notyfikacje</div>
+        <div class="center">{{lang.title_notifications}}</div>
     </ons-toolbar>
     <div>
         <div class="task" ng-repeat="element in notifications">
@@ -15,12 +15,12 @@
                 {{element.created_at | date: 'dd.MM.yyyy HH:mm'}}
                 <br>
                 <div ng-if="element.reservation.offer_car">
-                    <strong>Nowy wynajem samochodu</strong>
+                    <strong>{{lang.car_service_text}}</strong>
                     <br> {{element.reservation.offer_car.brand}} {{element.reservation.offer_car.model}}</div>
                 <div ng-if="element.reservation.offer_place">
-                    <strong>Nowy wynajem miejsca parkingowego</strong>
+                    <strong>{{lang.parking_service_text}}</strong>
                     <br> {{element.reservation.offer_place.name}}</div>
-                <span class="red" ng-if="element.reservation.canceled==1">anulowano przez właściciela  <br></span>
+                <span class="red" ng-if="element.reservation.canceled==1">{{lang.cancelled_text}} {{lang.by_owner}}  <br></span>
             </div>
             <div class="listElement borderBottomBlack" ng-if="element.action=='new_rent'&&element.reservation.offer_place" ng-click="showPlace(element.reservation.offer_place.id)">
                 <div class="arrowRight"></div>
@@ -28,12 +28,12 @@
                 {{element.created_at | date: 'dd.MM.yyyy HH:mm'}}
                 <br>
                 <div ng-if="element.reservation.offer_car">
-                    <strong>Nowy wynajem samochodu</strong>
+                    <strong>{{lang.car_service_text}}</strong>
                     <br> {{element.reservation.offer_car.brand}} {{element.reservation.offer_car.model}}</div>
                 <div ng-if="element.reservation.offer_place">
-                    <strong>Nowy wynajem miejsca parkingowego</strong>
+                    <strong>{{lang.parking_service_text}}</strong>
                     <br> {{element.reservation.offer_place.name}}</div>
-                <span class="red" ng-if="element.reservation.canceled==1">anulowano przez właściciela  <br></span>
+                <span class="red" ng-if="element.reservation.canceled==1">{{lang.cancelled_text}} {{lang.by_owner}}  <br></span>
             </div>
         </div>
     </div>

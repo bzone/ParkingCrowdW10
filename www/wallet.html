@@ -5,19 +5,19 @@
                 <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
             </ons-toolbar-button>
         </div>
-        <div class="center">portfel</div>
+        <div class="center">{{lang.title_wallet}}</div>
     </ons-toolbar>
     <div class="navigation-bar">
         <div class="navigation-bar__center">
             <div class="button-bar" style="width:90%;margin:7px 5%; ">
                 <div class="button-bar__item" ng-click="changeToSummary()">
                     <input type="radio" name="navi-segment-a" checked>
-                    <div class="button-bar__button">Saldo</div>
+                    <div class="button-bar__button">{{lang.tab_balance}}</div>
                 </div>
 
                 <div class="button-bar__item" ng-click="changeToHistory()">
                     <input type="radio" name="navi-segment-a">
-                    <div class="button-bar__button">Historia</div>
+                    <div class="button-bar__button">{{lang.tab_history}}</div>
                 </div>
             </div>
         </div>
@@ -30,14 +30,14 @@
         <br>
         <br>
         <br>
-        <div>W Twoim portfeltu znajduje się:</div>
+        <div>{{lang.your_balance_text}}</div>
         <div class="time">
             {{user.balance | number:2}}zł
         </div>
         <br>
         <div class="blackLine"></div>
         <br>
-        <br> Aby dodać lub wypłacić środki skorzystaj ze strony parkingcrowd.com
+        <br> {{lang.text_wallet_info}}
     </div>
     <div ng-if="walletView=='history'">
         <div class="task" ng-repeat="element in walletList">
@@ -47,20 +47,20 @@
                 <div class="saldo">
                     <span class="underline red" ng-if="element.type=='out'">- {{element.value | number:1}}zł</span>
                     <span class="underline green" ng-if="element.type=='in'">{{element.value | number:1}}zł</span>
-                    <br> saldo:
+                    <br> {{lang.text_balance}}
                     <br> {{element.amount | number:2}}zł
                 </div>
                 {{element.created_at | date: 'dd.MM.yyyy - HH:mm'}}
                 <br>
-                <span ng-if="element.type=='in'">Doładowanie przez stronę</span>
+                <span ng-if="element.type=='in'">{{lang.by_site}}</span>
                 <span ng-if="element.type=='out'">
                             <span ng-if="element.reservation.offer_place">
-                                Wynajem parking<br>
+                                {{lang.parking_service_text}}<br>
                                 {{element.reservation.offer_place.name}}<br>
                                   {{element.reservation.hours | number:2}} h
                             </span>
                 <span ng-if="element.reservation.offer_car">
-                                Wynajem samochodu<br>
+                                {{lang.car_service_text}}<br>
                                 {{element.reservation.offer_place.name}}<br>
                                 {{element.reservation.hours | number:2}} h
                  </span>

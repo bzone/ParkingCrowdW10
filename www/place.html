@@ -5,7 +5,7 @@
                 <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
             </ons-toolbar-button>
         </div>
-        <div class="center">detale oferty</div>
+        <div class="center">{{lang.title_details_offer}}</div>
         <div class="right">
             <ons-toolbar-button>
                 <ons-icon icon="ion-ios-heart-outline" size="28px" fixed-width="false" ng-if="!currentPlace.favourite" ng-click="addPlaceToFav(currentPlace.id)"></ons-icon>
@@ -18,12 +18,12 @@
             <div class="button-bar" style="width:90%;margin:7px 5%; ">
                 <div class="button-bar__item" ng-click="changeToMap()">
                     <input type="radio" name="navi-segment-a" checked>
-                    <div class="button-bar__button">Mapa</div>
+                    <div class="button-bar__button">{{lang.map_text}}</div>
                 </div>
 
                 <div class="button-bar__item" ng-click="changeToPhotos()">
                     <input type="radio" name="navi-segment-a">
-                    <div class="button-bar__button">Zdjecia</div>
+                    <div class="button-bar__button">{{lang.photos_text}}</div>
                 </div>
             </div>
         </div>
@@ -42,15 +42,15 @@
         </div>
         <div class="doubleButtons" ng-if="!currentPlace.booked_by">
             <div class="col-1-2 paddingR5">
-                <a class="submitButton" ng-click="parkNow('place')">Zaparkuj teraz <span class="whiteBadge">{{currentPlace.price_per_hour | number:2}}zł/h</span></a>
+                <a class="submitButton" ng-click="parkNow('place')">{{lang.park_now_text}} <span class="whiteBadge">{{currentPlace.price_per_hour | number:2}}zł/h</span></a>
             </div>
             <div class="col-1-2 paddingL5">
-                <a class="submitButton alternative" ng-click="reservePlace()">Zarezerwuj</a>
+                <a class="submitButton alternative" ng-click="reservePlace()">{{lang.reserve_text}}</a>
             </div>
             <div class="clear"></div>
         </div>
         <div class="buttonHolder" ng-if="currentPlace.booked_by">
-            <a class="submitButton alternative" ng-click="reservePlace()">Zarezerwuj</a>
+            <a class="submitButton alternative" ng-click="reservePlace()">{{lang.reserve_text}}</a>
             <div class="clear"></div>
         </div>
         <div class="adresModule">
@@ -71,7 +71,7 @@
             <br/> {{currentPlace.address_postcode}} {{currentPlace.address_city}}
         </div>
         <div class="zajetoscModule borderTopBlack">
-            Zajętość
+            {{lang.occupance_text}}
             <div class="clear"></div>
             <div class="bars">
                 <div class="bar" style="width:100%;" data-time="{{currentPlace.now | date: 'HH:mm'}}"></div>
@@ -98,11 +98,11 @@
         </div>
         <ul class="list">
             <li class="list__header">
-                Udogodnienia
+                {{lang.features_text}}
             </li>
             <li class="list__item">
                 <div class="inputLabel">
-                    Strzeżony 24h
+                    {{lang.guarded_24_text}}
                 </div>
                 <div class="inputHolder checkbox">
                     <input type="checkbox" checked="">
@@ -112,7 +112,7 @@
             </li>
             <li class="list__item">
                 <div class="inputLabel">
-                    Monitoring
+                    {{lang.monitoring_text}}
                 </div>
                 <div class="inputHolder checkbox">
                     <input type="checkbox" checked="">
@@ -122,7 +122,7 @@
             </li>
             <li class="list__item">
                 <div class="inputLabel">
-                    Zadaszony
+                    {{lang.covered_text}}
                 </div>
                 <div class="inputHolder checkbox">
                     <input type="checkbox" checked="">
@@ -132,7 +132,7 @@
             </li>
             <li class="list__item">
                 <div class="inputLabel">
-                    Dla autokarów
+                    {{lang.bus_text}}
                 </div>
                 <div class="inputHolder checkbox">
                     <input type="checkbox" checked="">
@@ -141,7 +141,7 @@
                 </div>
             </li>
             <li class="list__item">
-                Informacje dodatkowe:
+                {{lang.additional_info_text}}:
                 <br> <span style="line-height:20px; display: block; margin-bottom: 15px;">{{currentPlace.description}}</span>
             </li>
         </ul>
@@ -150,7 +150,7 @@
             <strong>{{currentPlace.user.first_name}} {{currentPlace.user.last_name}}</strong>
             <br>
             <div ng-if="currentPlace.user.first_offer_created_at.length>4">
-                Wynajmuje od: <span class="green">{{currentPlace.user.first_offer_created_at | date: 'dd.MM.yyyy'}}</span>
+                {{lang.rents_from_text}}<span class="green">{{currentPlace.user.first_offer_created_at | date: 'dd.MM.yyyy'}}</span>
             </div>
             <br>
             <br>{{currentPlace.user.about}}

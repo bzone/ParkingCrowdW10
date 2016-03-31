@@ -5,7 +5,7 @@
                 <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
             </ons-toolbar-button>
         </div>
-        <div class="center">szczegóły</div>
+        <div class="center">{{lang.title_details}}</div>
     </ons-toolbar>
     <ons-toolbar ng-if="detailsView.paid==1||detailsView.canceled==1">
         <div class="left">
@@ -13,7 +13,7 @@
                 <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
             </ons-toolbar-button>
         </div>
-        <div class="center">szczegóły</div>
+        <div class="center">{{lang.title_details}}</div>
     </ons-toolbar>
 
     <div>
@@ -24,7 +24,7 @@
             <span ng-if="detailsView.offer_place">{{detailsView.offer_place.name}}</span>
             <br/>
             <strong> {{detailsView.start_date | date: 'dd.MM.yyyy HH:mm'}} - {{detailsView.end_date | date: 'dd.MM.yyyy HH:mm'}}</strong>
-            <br/> całkowity koszt wynajmu: {{detailsView.price | number:2}}zł
+            <br/> {{lang.overall_parking_cost_text}}{{detailsView.price | number:2}}zł
             <br/>
             <br/>
         </div>
@@ -33,11 +33,11 @@
             <span ng-if="detailsView.offer_place">{{detailsView.offer_place.name}}</span>
             <br/>
             <strong> {{detailsView.start_date | date: 'dd.MM.yyyy HH:mm'}} - {{detailsView.end_date | date: 'dd.MM.yyyy HH:mm'}}</strong>
-            <br/> całkowity koszt wynajmu: {{detailsView.price | number:2}}zł
+            <br/> {{lang.overall_parking_cost_text}}{{detailsView.price | number:2}}zł
             <br/>
             <br/>
 
-            <a class="submitButton white" ng-click="cancleReservation(detailsView.id)">Anuluj rezerwację</a>
+            <a class="submitButton white" ng-click="cancleReservation(detailsView.id)">{{lang.cancel_reservation_text}}</a>
         </div>
 
 
@@ -46,7 +46,7 @@
             <img src="http://maps.googleapis.com/maps/api/staticmap?center={{detailsView.offer_car.latitude}},{{detailsView.offer_car.longitude}}&zoom=15&scale=2&size=375x200&maptype=roadmap&key=AIzaSyAtxSIxBFohxnPNp2BYs9ysrHY_cKJxblA&format=png&visual_refresh=true&markers=icon:http://dl.dropboxusercontent.com/u/28981503/mappoint.png%7Cshadow:false%7C{{detailsView.offer_car.latitude}},{{detailsView.offer_car.longitude}}" class="img-responsive" />
 
             <div class="adresModule">
-                <strong>Adres odbioru pojazdu:</strong>
+                <strong>{{lang.car_get_adress}}</strong>
                 <div class="clear"></div>
                 {{detailsView.offer_car.address_street}}
                 <br/> {{detailsView.offer_car.address_postcode}} {{detailsView.offer_car.address_city}}
@@ -63,7 +63,6 @@
             <img src="http://maps.googleapis.com/maps/api/staticmap?center={{detailsView.offer_place.latitude}},{{detailsView.offer_place.longitude}}&zoom=15&scale=2&size=375x200&maptype=roadmap&key=AIzaSyAtxSIxBFohxnPNp2BYs9ysrHY_cKJxblA&format=png&visual_refresh=true&markers=icon:http://dl.dropboxusercontent.com/u/28981503/mappoint.png%7Cshadow:false%7C{{detailsView.offer_place.latitude}},{{detailsView.offer_place.longitude}}" class="img-responsive" />
 
             <div class="adresModule">
-                <strong>Adres parkingu:</strong>
                 <div class="clear"></div>
                 {{detailsView.offer_place.address_street}}
                 <br/> {{detailsView.offer_place.address_postcode}} {{detailsView.offer_place.address_city}}

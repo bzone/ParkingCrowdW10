@@ -5,7 +5,7 @@
                 <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
             </ons-toolbar-button>
         </div>
-        <div class="center">rezerwacja</div>
+        <div class="center">{{lang.reserve_parking_title}}</div>
     </ons-toolbar>
 
     <div>
@@ -36,34 +36,34 @@
         <ul class="list">
             <li class="list__item">
                 <div class="inputLabel">
-                    Od
+                    {{lang.from_Text}}
                 </div>
                 <div class="inputHolder">
-                    <input type="datetime-local" class="text-input text-input--transparent text-right" style="width:100%; margin-top:4px;" placeholder="data od" id="dataod" ng-model="reserveFrom" ng-init="reserveFrom">
+                    <input type="datetime-local" class="text-input text-input--transparent text-right" style="width:100%; margin-top:4px;" placeholder="{{lang.from_Text}}" id="dataod" ng-model="reserveFrom" ng-init="reserveFrom">
                 </div>
             </li>
             <li class="list__item">
                 <div class="inputLabel">
-                    Do
+                    {{lang.to_text}}
                 </div>
                 <div class="inputHolder">
-                    <input type="datetime-local" class="text-input text-input--transparent text-right" style="width:100%; margin-top:4px;" placeholder="data do" id="datado" ng-model="reserveTo" ng-init="reserveTo">
+                    <input type="datetime-local" class="text-input text-input--transparent text-right" style="width:100%; margin-top:4px;" placeholder="{{lang.to_text}}" id="datado" ng-model="reserveTo" ng-init="reserveTo">
                 </div>
             </li>
         </ul>
         <div ng-if="currentPlace.reservations.length>0">
             <div class="alertModule">
-                Parking niedostępnych w terminach:
+                {{lang.parking_not_available_at_text}}
             </div>
             <ul class="list noBorderTop">
                 <li class="list__item" ng-repeat="term in currentPlace.reservations">
-                    od {{term.start_date | date: 'dd.MM.yyyy HH:mm'}} do {{term.end_date | date: 'dd.MM.yyyy HH:mm'}}
+                    {{lang.from_Text}} {{term.start_date | date: 'dd.MM.yyyy HH:mm'}} {{lang.to_text}} {{term.end_date | date: 'dd.MM.yyyy HH:mm'}}
                 </li>
             </ul>
         </div>
 
         <div class="buttonHolder">
-            <a class="submitButton alternative" ng-click="reservePlaceConfirm()">Zarezerwuj</a>
+            <a class="submitButton alternative" ng-click="reservePlaceConfirm()">{{lang.reserve_text}}</a>
             <div class="clear"></div>
         </div>
     </div>

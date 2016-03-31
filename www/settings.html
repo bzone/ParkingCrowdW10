@@ -5,7 +5,7 @@
                 <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
             </ons-toolbar-button>
         </div>
-        <div class="center">Ustawienia</div>
+        <div class="center">{{lang.title_settings}}</div>
         <div class="right">
 
         </div>
@@ -16,7 +16,8 @@
         <br>
         <div id="avatarPreview" class="avatar" style="background-image:url('http://parkingcrowd.dev.thickmug.com{{user.image_url}}');"></div>
         <div class="buttonHolder">
-            <a class="submitButton " ng-click="changeAvatar()">Zmień awatar</a></div>
+            <a class="submitButton " ng-click="changeAvatar()">{{lang.set_avatar_text}}</a>
+        </div>
     </div>
     <div class="clear"></div>
     <div>
@@ -32,27 +33,27 @@
             </li>
             <li class="list__item">
                 <ons-row align="center" class="row ons-row-inner row-center">
-                    <ons-col class="col ons-col-inner">Telefon</ons-col>
+                    <ons-col class="col ons-col-inner">{{lang.text_phone}}</ons-col>
                     <ons-col class="col ons-col-inner">
-                        <input type="tel" class="text-input text-input--transparent inputWithLabel text-right" placeholder="E-mail" ng-model="user.phone_number" ng-init="user.phone_number">
+                        <input type="tel" class="text-input text-input--transparent inputWithLabel text-right" placeholder="{{lang.text_phone}}" ng-model="user.phone_number" ng-init="user.phone_number">
                     </ons-col>
                 </ons-row>
             </li>
             <li class="list__item">
-                O sobie:
-                <textarea class="textarea textarea--transparent" style="width:100%;height:50px;margin-top:4px;" placeholder="Opis o sobie" ng-model="user.about" ng-init="user.about"></textarea>
+                {{lang.about_text}}:
+                <textarea class="textarea textarea--transparent" style="width:100%;height:50px;margin-top:4px;" placeholder="{{lang.about_text}}" ng-model="user.about" ng-init="user.about"></textarea>
             </li>
         </ul>
 
         <ul class="list">
             <li class="list__header">
-                Ustawienia wyszukiwania
+                {{lang.settings_search}}
             </li>
             <li class="list__item">
-                <span style="line-height:20px; display: block; margin-bottom: 15px;">Zaznacz którę opcję muszą być spełnione podczas wyszukiwania prarkingu:</span>
+                <span style="line-height:20px; display: block; margin-bottom: 15px;">{{lang.search_text}}</span>
             </li>
             <li class="list__item">
-                Strzeżony
+                {{lang.add_guarded_text}}
                 <label class="switch switch--list-item">
                     <input id="prop0" type="checkbox" class="switch__input" checked ng-if="user.settings.places[0].prop_guarded">
                     <input id="prop0" type="checkbox" class="switch__input" ng-if="!user.settings.places[0].prop_guarded">
@@ -60,7 +61,7 @@
                 </label>
             </li>
             <li class="list__item">
-                Monitorowany
+                {{lang.monitoring_text}}
                 <label class="switch switch--list-item">
                     <input id="prop1" type="checkbox" class="switch__input" checked ng-if="user.settings.places[1].prop_monitored">
                     <input id="prop1" type="checkbox" class="switch__input" ng-if="!user.settings.places[1].prop_monitored">
@@ -68,7 +69,7 @@
                 </label>
             </li>
             <li class="list__item">
-                Zadaszony
+                {{lang.add_covered_text}}
                 <label class="switch switch--list-item">
                     <input id="prop3" type="checkbox" class="switch__input" checked ng-if="user.settings.places[3].prop_covered">
                     <input id="prop3" type="checkbox" class="switch__input" ng-if="!user.settings.places[3].prop_covered">
@@ -76,7 +77,7 @@
                 </label>
             </li>
             <li class="list__item">
-                Dla autokarów
+                {{lang.add_bus_Tex}}
                 <label class="switch switch--list-item">
                     <input id="prop2" type="checkbox" class="switch__input" checked ng-if="user.settings.places[2].prop_bus">
                     <input id="prop2" type="checkbox" class="switch__input" ng-if="!user.settings.places[2].prop_bus">
@@ -87,6 +88,6 @@
     </div>
     <div class="clear"></div>
     <div class="buttonHolder">
-        <a class="submitButton alternative" ng-click="saveSettings()">Zapisz ustawienia</a>
+        <a class="submitButton alternative" ng-click="saveSettings()">{{lang.text_save_settings}}</a>
     </div>
 </ons-page>

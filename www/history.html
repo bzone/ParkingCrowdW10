@@ -5,7 +5,7 @@
                 <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
             </ons-toolbar-button>
         </div>
-        <div class="center">historia najmu</div>
+        <div class="center">{{lang.title_histoy}}</div>
     </ons-toolbar>
     <div>
         <div class="task" ng-repeat="element in historyList |  orderBy:'-created_at'">
@@ -14,23 +14,23 @@
                 <div class="clear"></div>
 
                 <div class="bigGreen">
-                    {{key}} od {{element.start_date | date: 'dd.MM.yyyy HH:mm'}}
-                    <br> do {{element.end_date | date: 'dd.MM.yyyy HH:mm'}}
+                    {{lang.from_Text}} {{element.start_date | date: 'dd.MM.yyyy HH:mm'}}
+                    <br> {{lang.to_text}} {{element.end_date | date: 'dd.MM.yyyy HH:mm'}}
                 </div>
                 <div class="clear"></div>
                 {{element.created_at | date: 'dd.MM.yyyy - HH:mm'}}
                 <br>
                 <span ng-if="element.offer_place">
-                                Wynajem parking<br>
+                                {{lang.parking_service_text}}<br>
                                 {{element.offer_place.name}}<br>
                             
                             </span>
                 <span ng-if="element.offer_car">
-                                Wynajem samochodu<br>
+                                {{lang.car_service_text}}<br>
                                 {{element.offer_place.name}}<br>   
                  </span>
-                <span class="green" ng-if="element.canceled!=1">zakończone - czas: {{element.hours | number:2}} h</span>
-                <span class="red" ng-if="element.canceled==1">Anulowano <span ng-if="element.canceled_by=='owner'">przez wynajmującego</span></span>
+                <span class="green" ng-if="element.canceled!=1">{{lang.rent_time}}{{element.hours | number:2}} h</span>
+                <span class="red" ng-if="element.canceled==1">{{lang.cancelled_text}} <span ng-if="element.canceled_by=='owner'">{{lang.by_owner}}</span></span>
             </div>
         </div>
     </div>

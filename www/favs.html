@@ -5,19 +5,19 @@
                 <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
             </ons-toolbar-button>
         </div>
-        <div class="center">ulubione</div>
+        <div class="center">{{lang.title_favourites}}</div>
     </ons-toolbar>
     <div class="navigation-bar">
         <div class="navigation-bar__center">
             <div class="button-bar" style="width:90%;margin:7px 5%; ">
                 <div class="button-bar__item" ng-click="changeToParking()">
                     <input type="radio" name="navi-segment-a" checked>
-                    <div class="button-bar__button">Parking</div>
+                    <div class="button-bar__button">{{lang.parking_text}}</div>
                 </div>
 
                 <div class="button-bar__item" ng-click="changeToCars()">
                     <input type="radio" name="navi-segment-a">
-                    <div class="button-bar__button">Samochody</div>
+                    <div class="button-bar__button">{{lang.cars_text}}</div>
                 </div>
             </div>
         </div>

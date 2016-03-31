@@ -5,12 +5,12 @@
                 <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
             </ons-toolbar-button>
         </div>
-        <div class="center">ocena</div>
+        <div class="center">{{lang.rate_text}}</div>
     </ons-toolbar>
 
     <div>
         <div class="colorHeader" ng-if="rentTime.type=='place'">
-            oceń miejsce parkingowe
+            {{lang.rate_parking}}
             <br>
             <br>
             <div class="rate">
@@ -27,8 +27,8 @@
             </div>
             <br/>
             <br/>
-            <a class="submitButton white" ng-click="sendRating()" ng-if="rentTime.rating>0">prześlij ocenę</a>
-            <a class="submitButton white" style="opacity:0.3;" ng-if="rentTime.rating==0">prześlij ocenę</a>
+            <a class="submitButton white" ng-click="sendRating()" ng-if="rentTime.rating>0">{{lang.send_rating_text}}</a>
+            <a class="submitButton white" style="opacity:0.3;" ng-if="rentTime.rating==0">{{lang.send_rating_text}}</a>
         </div>
 
 
@@ -55,7 +55,7 @@
             </div>
 
             <div class="adresModule" ng-if="rentTime.type=='car'">
-                <strong>Miejsce zwrotu pojazdu:</strong>
+                <strong>{{lang.car_return_place}}</strong>
                 <div class="clear"></div>
                 {{rentTime.currentPlace.address_street}}
                 <br/> {{rentTime.currentPlace.address_postcode}} {{rentTime.currentPlace.address_city}}

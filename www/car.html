@@ -5,7 +5,7 @@
                 <ons-icon icon="ion-ios-arrow-back" size="28px" fixed-width="false"></ons-icon>
             </ons-toolbar-button>
         </div>
-        <div class="center">detale oferty</div>
+        <div class="center">{{lang.title_details_offer}}</div>
         <div class="right">
             <ons-toolbar-button>
                 <ons-icon icon="ion-ios-heart-outline" size="28px" fixed-width="false" ng-if="!currentPlace.favourite" ng-click="addCarToFav(currentPlace.id)"></ons-icon>
@@ -18,12 +18,12 @@
             <div class="button-bar" style="width:90%;margin:7px 5%; ">
                 <div class="button-bar__item" ng-click="changeToMap()">
                     <input type="radio" name="navi-segment-a" checked>
-                    <div class="button-bar__button">Mapa</div>
+                    <div class="button-bar__button">{{lang.map_text}}</div>
                 </div>
 
                 <div class="button-bar__item" ng-click="changeToPhotos()">
                     <input type="radio" name="navi-segment-a">
-                    <div class="button-bar__button">Zdjecia</div>
+                    <div class="button-bar__button">{{lang.photos_text}}</div>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
         <br>
         <div class="doubleButtons" ng-if="!currentPlace.booked_by">
             <div class="buttonHolder">
-                <a class="submitButton" ng-click="parkNow('car')">Wynajmnij teraz <span class="whiteBadge">{{currentPlace.price_per_hour | number:2}}zł/h</span></a>
+                <a class="submitButton" ng-click="parkNow('car')">{{lang.car_rent_now_text}} <span class="whiteBadge">{{currentPlace.price_per_hour | number:2}}zł/h</span></a>
             </div>
             <div class="clear"></div>
         </div>
@@ -67,14 +67,14 @@
         </div>
         <ul class="list">
             <li class="list__header">
-                Informacje o samochodzie
+                {{lang.car_info_text}}
             </li>
             <li class="list__item">
-                {{currentPlace.number_of_seats}} osobowy
+                {{currentPlace.number_of_seats}} {{lang.four_persons_feature}}
             </li>
             <li class="list__item">
                 <div class="inputLabel">
-                    Klimatyzacja
+                    {{lang.air_con_text}}
                 </div>
                 <div class="inputHolder checkbox">
                     <input type="checkbox" checked="">
@@ -83,7 +83,7 @@
             </li>
             <li class="list__item">
                 <div class="inputLabel">
-                    Kabriolet
+                    {{lang.cabriolet_text}}
                 </div>
                 <div class="inputHolder checkbox">
                     <input type="checkbox" checked="">
@@ -92,7 +92,7 @@
             </li>
             <li class="list__item">
                 <div class="inputLabel">
-                    ABS
+                    {{lang.abs_text}}
                 </div>
                 <div class="inputHolder checkbox">
                     <input type="checkbox" checked="">
@@ -102,7 +102,7 @@
             </li>
             <li class="list__item">
                 <div class="inputLabel">
-                    Wspomaganie
+                    {{lang.power_steering_text}}
                 </div>
                 <div class="inputHolder checkbox">
                     <input type="checkbox" checked="">
@@ -111,7 +111,7 @@
                 </div>
             </li>
             <li class="list__item">
-                Informacje dodatkowe:
+                {{lang.additional_info_text}}:
                 <br> <span style="line-height:20px; display: block; margin-bottom: 15px;">{{currentPlace.description}}</span>
             </li>
         </ul>
@@ -120,7 +120,7 @@
             <strong>{{currentPlace.user.first_name}} {{currentPlace.user.last_name}}</strong>
             <br>
             <div ng-if="currentPlace.user.first_offer_created_at.length>4">
-                Wynajmuje od: <span class="green">{{currentPlace.user.first_offer_created_at | date: 'dd.MM.yyyy'}}</span>
+                {{lang.rents_from_text}} <span class="green">{{currentPlace.user.first_offer_created_at | date: 'dd.MM.yyyy'}}</span>
             </div>
             <br>
             <br>{{currentPlace.user.about}}
