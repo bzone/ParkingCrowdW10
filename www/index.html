@@ -140,22 +140,19 @@
                 <div class="pageHolder" ng-init="updateLocation()">
                     <div>
                         <div style="height:90vh">
-                                   <script type="text/ng-template" id="searchbox.tpl.html">
-                                   <span class="searchHolder">
-            <input type="text"
-                   placeholder="szukaj"
-                   style="width:270px; height:30px;" id="sBox">
-                                      <div class="searchParking active"></div>
-                                      <div class="searchCars"></div>
-                                       </span>
-        </script>
-                               <div id="searchBoxParent"></div>
+                            <script type="text/ng-template" id="searchbox.tpl.html">
+
+                                <input type="text" placeholder="{{search.placeholder}}" id="sBox">
+                            </script>
+                            <div id="searchBoxParent">
+                                <div class="searchParking active" ng-if="search.type=='parking'"></div>
+                                <div class="searchParking" ng-if="search.type=='car'" ng-click="searchForParking()"></div>
+                                <div class="searchCars active" ng-if="search.type=='car'"></div>
+                                <div class="searchCars" ng-if="search.type=='parking'" ng-click="searchForCars()"></div>
+                            </div>
 
                             <ui-gmap-google-map center='map.center' zoom='map.zoom' options='map.options'>
-                    <ui-gmap-search-box template="searchbox.template"
-                                events="searchbox.events"
-                                position="TOP_RIGHT"
-                                options="searchbox.options" parentdiv="'searchBoxParent'" />
+                                <ui-gmap-search-box template="searchbox.template" events="searchbox.events" position="TOP_RIGHT" options="searchbox.options" parentdiv="'searchBoxParent'" />
                                 <ui-gmap-markers models="map.markers" coords="'self'" modelsbyref="false" idkey="model.id" click="markerDetails" icon="'mapIcon'" />
                             </ui-gmap-google-map>
                         </div>

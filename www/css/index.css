@@ -2088,3 +2088,54 @@ span.green {
 .angular-google-map-container {
     height: 100vh;
 }
+
+div#searchBoxParent {
+    background-color: #09CA8A;
+    padding: 10px;
+    padding-right: 115px;
+    position: relative;
+}
+
+input#sBox {
+    margin: 0px;
+    width: 100% !important;
+    display: block;
+    height: 46px !important;
+    border: none;
+    text-align: left;
+    padding-left: 40px;
+    background-image: url(loop.png);
+    background-size: 16px 16px;
+    background-repeat: no-repeat;
+    background-position: 14px 15px;
+}
+
+.searchParking {
+    position: absolute;
+    width: 46px;
+    height: 46px;
+    right: 62px;
+    top: 10px;
+    background-image: url(search_parking_icon@3x.png);
+    background-size: 46px 46px;
+    background-repeat: no-repeat;
+}
+
+.searchCars {
+    position: absolute;
+    width: 46px;
+    height: 46px;
+    right: 10px;
+    top: 10px;
+    background-image: url(search_car_icon@3x.png);
+    background-size: 46px 46px;
+    background-repeat: no-repeat;
+}
+
+.searchParking.active {
+        background-image: url(search_parking_icon_active@3x.png);
+}
+
+.searchCars.active {
+        background-image: url(search_car_icon_active@3x.png);
+}

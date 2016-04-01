@@ -64,6 +64,7 @@
             favourite_text: 'Ulubione',
             scanner_qr_text: 'Skaner QRCode',
             where_do_you_want_to_park_text: 'Gdzie chcesz zaparkować?',
+            where_do_you_want_to_rent_text:'Gdzie chcesz wynająć pojazd?',
             login_text_bad_credentials: 'Login lub hasło niepoprawne!',
             login_text_no_account: 'Login lub hasło niepoprawne!',
             create_account_text_name_taken: 'Wybrana nazwa jest już zajęta!',
@@ -660,6 +661,81 @@
         }
 
         $scope.rent = false;
+        $scope.search={};
+        $scope.search.type="parking";
+        $scope.search.placeholder=$scope.lang.where_do_you_want_to_park_text;
+        $scope.search.lat=0;
+        $scope.search.long=0;
+        
+        $scope.searchForParking = function(){
+             $scope.search.type="parking";
+             $.ajax({
+                                type: "GET",
+                                url: url + '/api/v1/offers/places',
+                                beforeSend: function () {},
+                                data: {
+                                    latitude: $scope.search.lat,
+                                    longitude: $scope.search.long,
+                                    limit:30
+                                },
+                                headers: {
+                                    "api-key": currentApiKey
+                                },
+                                datatype: 'json',
+                                cache: false,
+                                success: function (respond) {
+                                    window.console && console.log(respond);
+                                    if (respond.status == "success") {
+                                        window.console && console.log('Pobrano listę parkingów');
+                                        $scope.placesList = angular.fromJson(respond.data);
+                                        $scope.centerMap($scope.search.lat, $scope.search.long);
+                                        $scope.loadMarkers('places');
+                                        $scope.$apply();
+
+                                    } else if (respond.status == "error") {
+                                        window.console && console.log('error ' + respond.data);
+                                    }
+                                },
+                                error: function (respond) {
+                                    window.console && console.log('error ' + JSON.stringify(respond));
+                                }
+                            });  
+        }
+        
+         $scope.searchForCars = function(){
+             $scope.search.type="car";
+               $.ajax({
+                                type: "GET",
+                                url: url + '/api/v1/offers/cars',
+                                beforeSend: function () {},
+                                data: {
+                                    latitude: $scope.search.lat,
+                                    longitude: $scope.search.long,
+                                    limit:30
+                                },
+                                headers: {
+                                    "api-key": currentApiKey
+                                },
+                                datatype: 'json',
+                                cache: false,
+                                success: function (respond) {
+                                    window.console && console.log(respond);
+                                    if (respond.status == "success") {
+                                        window.console && console.log('Pobrano listę samochodow');
+                                        $scope.carsList = angular.fromJson(respond.data);
+                                        $scope.centerMap($scope.search.lat, $scope.search.long);
+                                        $scope.loadMarkers('cars');
+                                        $scope.$apply();
+
+                                    } else if (respond.status == "error") {
+                                        window.console && console.log('error ' + respond.data);
+                                    }
+                                },
+                                error: function (respond) {
+                                    window.console && console.log('error ' + JSON.stringify(respond));
+                                }
+                            });
+        }
 
 
         $scope.map = {
@@ -683,31 +759,24 @@
         
           var events = {
             places_changed:function (searchBox) {
-                alert('ok');
+                
                 var place = searchBox.getPlaces();
                 if (!place || place == 'undefined' || place.length == 0) {
                     console.log('no place data :(');
                     return;
                 }
+                
+                   $scope.search.lat=place[0].geometry.location.lat(),
+                $scope.search.long=place[0].geometry.location.lng()
+                $scope.$apply();
+                
+              if ($scope.search.type=="car") {
+                           $scope.searchForCars();
+                     } else {
+                          $scope.searchForParking();
+                     }
 
-                // refresh the map
-                $scope.map = {
-                    center:{
-                        latitude:place[0].geometry.location.lat(),
-                        longitude:place[0].geometry.location.lng()
-                    },
-                    zoom:10
-                };
-
-                // refresh the marker
-                $scope.marker = {
-                    id:0,
-                    options:{ draggable:false },
-                    coords:{
-                        latitude:place[0].geometry.location.lat(),
-                        longitude:place[0].geometry.location.lng()
-                    }
-                };
+               
 
             }
         };
@@ -758,7 +827,8 @@
 
         $scope.loadMarkers = function (type) {
             $scope.map.markers = [];
-            if (type = "places") {
+            $scope.$apply();
+            if (type == "places") {
                 angular.forEach($scope.placesList, function (mark, index) {
                     $scope.map.markers.push({
                         id: mark.id,
@@ -768,6 +838,17 @@
                     });
                 });
             }
+              if (type == "cars") {
+                angular.forEach($scope.carsList, function (mark, index) {
+                    $scope.map.markers.push({
+                        id: mark.id,
+                        latitude: mark.latitude,
+                        longitude: mark.longitude,
+                        mapIcon: 'https://dl.dropboxusercontent.com/u/28981503/mappoint.png'
+                    });
+                });
+            }
+            
         }
 
         $scope.isCheckedById = function (id) {
@@ -1393,6 +1474,10 @@
                 $scope.centerMap(currentLocationLat, currentLocationLong);
                 $scope.map.markers = [];
                 $scope.$apply();
+                
+                
+                $scope.search.lat=currentLocationLat;
+                $scope.search.long=currentLocationLong;
 
                 $.ajax({
                     type: "GET",
