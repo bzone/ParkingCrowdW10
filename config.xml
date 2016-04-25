@@ -1,5 +1,5 @@
-<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.pointeam.app" version="1.0.0">
-    <name>Parking Crowd</name>
+<widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.parkingcrowd.app" version="1.0.0">
+    <name>ParkingCrowd</name>
     <description></description>
     <author href="http://phonegap.com" email="support@phonegap.com">ThickMug</author>
     <content src="index.html" />
